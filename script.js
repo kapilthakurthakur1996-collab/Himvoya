@@ -35,62 +35,72 @@ let selectedProperty = null;
 // SEARCH / EXPLORE
 // ==============================
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  const query = where.value.trim().toLowerCase();
-  const type = kind.value;
+    const query = where.value.trim().toLowerCase();
+    const type = kind.value;
 
-  let matches = 0;
+    let matches = 0;
 
-  cards.forEach((card) => {
-    const place = card.dataset.place.toLowerCase();
-    const cardType = card.dataset.type;
+    cards.forEach((card) => {
+      const place = (card.dataset.place || "").toLowerCase();
+      const cardType = card.dataset.type || "all";
 
-    const placeMatch =
-      !query ||
-      place.includes(query) ||
-      (query.includes("himachal") && place === "himachal");
+      const placeMatch =
+        !query ||
+        place.includes(query) ||
+        (query.includes("himachal") && place === "himachal");
 
-    const typeMatch =
-      type === "all" || cardType === type;
+      const typeMatch =
+        type === "all" || cardType === type;
 
-    const show = placeMatch && typeMatch;
+      const show = placeMatch && typeMatch;
 
-    card.style.display = show ? "block" : "none";
+      card.style.display = show ? "" : "none";
 
-    if (show) {
-      matches++;
+      if (show) {
+        matches++;
+      }
+    });
+
+    const stays = document.querySelector("#stays");
+
+    if (stays) {
+      stays.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    if (matches) {
+      result.textContent =
+        `${matches} matching place${matches > 1 ? "s" : ""} found.`;
+    } else {
+      result.textContent =
+        "No exact match yet — try Chamba or Himachal.";
     }
   });
-
-  document.querySelector("#stays").scrollIntoView({
-    behavior: "smooth"
-  });
-
-  if (matches) {
-    result.textContent =
-      `${matches} matching place${matches > 1 ? "s" : ""} found.`;
-  } else {
-    result.textContent =
-      "No exact match yet — try Chamba or Himachal.";
-  }
-});
+}
 
 
 // ==============================
 // RESET SEARCH
 // ==============================
 
-where.addEventListener("input", function () {
-  if (!where.value.trim()) {
-    cards.forEach((card) => {
-      card.style.display = "block";
-    });
+if (where) {
+  where.addEventListener("input", function () {
+    if (!where.value.trim()) {
+      cards.forEach((card) => {
+        card.style.display = "";
+      });
 
-    result.textContent = "";
-  }
-});
+      if (result) {
+        result.textContent = "";
+      }
+    }
+  });
+}
 
 
 // ==============================
@@ -103,10 +113,8 @@ const propertyData = {
     category: "VALLEY VIEW STAY",
     location: "Himachal Pradesh",
     price: "From ₹2,499 / night",
-
     description:
       "Quiet mornings, panoramic peaks and warm local hospitality. A peaceful Himalayan base for travellers looking to slow down and reconnect with the mountains.",
-
     image:
       "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=85"
   },
@@ -115,10 +123,8 @@ const propertyData = {
     category: "BOUTIQUE MOUNTAIN STAY",
     location: "Chamba, Himachal Pradesh",
     price: "From ₹2,999 / night",
-
     description:
       "A peaceful base for slow travel, hikes and stargazing. Discover quiet mountain mornings, forest trails and the beauty of Chamba at your own pace.",
-
     image:
       "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=85"
   },
@@ -127,10 +133,8 @@ const propertyData = {
     category: "RIVERSIDE STAY",
     location: "Himachal Pradesh",
     price: "From ₹2,299 / night",
-
     description:
       "Wake up beside the river and explore hidden Himalayan villages. Designed for travellers who want nature, calm surroundings and authentic local experiences.",
-
     image:
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=85"
   }
@@ -163,23 +167,43 @@ cards.forEach((card) => {
       ...data
     };
 
-    modalCategory.textContent = data.category;
-    modalTitle.textContent = name;
-    modalLocation.textContent = data.location;
-    modalDescription.textContent = data.description;
-    modalPrice.textContent = data.price;
+    if (modalCategory) {
+      modalCategory.textContent = data.category;
+    }
 
-    modalImage.style.backgroundImage =
-      `url("${data.image}")`;
+    if (modalTitle) {
+      modalTitle.textContent = name;
+    }
 
-    modalMessage.textContent = "";
+    if (modalLocation) {
+      modalLocation.textContent = data.location;
+    }
 
-    propertyModal.classList.add("active");
+    if (modalDescription) {
+      modalDescription.textContent = data.description;
+    }
 
-    propertyModal.setAttribute(
-      "aria-hidden",
-      "false"
-    );
+    if (modalPrice) {
+      modalPrice.textContent = data.price;
+    }
+
+    if (modalImage) {
+      modalImage.style.backgroundImage =
+        `url("${data.image}")`;
+    }
+
+    if (modalMessage) {
+      modalMessage.textContent = "";
+    }
+
+    if (propertyModal) {
+      propertyModal.classList.add("active");
+
+      propertyModal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+    }
 
     document.body.classList.add("modal-open");
 
@@ -194,46 +218,59 @@ cards.forEach((card) => {
 
 function closePropertyModal() {
 
-  propertyModal.classList.remove("active");
+  if (propertyModal) {
+    propertyModal.classList.remove("active");
 
-  propertyModal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
+    propertyModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+  }
 
   document.body.classList.remove("modal-open");
-
 }
 
-modalClose.addEventListener(
-  "click",
-  closePropertyModal
-);
 
-modalBackdrop.addEventListener(
-  "click",
-  closePropertyModal
-);
+if (modalClose) {
+  modalClose.addEventListener(
+    "click",
+    closePropertyModal
+  );
+}
+
+
+if (modalBackdrop) {
+  modalBackdrop.addEventListener(
+    "click",
+    closePropertyModal
+  );
+}
 
 
 // ==============================
-// CHECK ESCAPE KEY
+// ESCAPE KEY
 // ==============================
 
 document.addEventListener(
   "keydown",
   function (e) {
 
-    if (e.key === "Escape") {
+    if (e.key !== "Escape") {
+      return;
+    }
 
-      if (propertyModal.classList.contains("active")) {
-        closePropertyModal();
-      }
+    if (
+      propertyModal &&
+      propertyModal.classList.contains("active")
+    ) {
+      closePropertyModal();
+    }
 
-      if (partnerModal.classList.contains("active")) {
-        closePartnerModal();
-      }
-
+    if (
+      partnerModal &&
+      partnerModal.classList.contains("active")
+    ) {
+      closePartnerModal();
     }
 
   }
@@ -244,38 +281,46 @@ document.addEventListener(
 // CHECK AVAILABILITY
 // ==============================
 
-availabilityBtn.addEventListener(
-  "click",
-  function () {
+if (availabilityBtn) {
 
-    if (!selectedProperty) {
-      return;
+  availabilityBtn.addEventListener(
+    "click",
+    function () {
+
+      if (!selectedProperty) {
+        return;
+      }
+
+      modalMessage.textContent =
+        `Availability request for ${selectedProperty.name} will be available soon.`;
+
     }
+  );
 
-    modalMessage.textContent =
-      `Availability request for ${selectedProperty.name} will be available soon.`;
-
-  }
-);
+}
 
 
 // ==============================
 // SEND ENQUIRY
 // ==============================
 
-enquiryBtn.addEventListener(
-  "click",
-  function () {
+if (enquiryBtn) {
 
-    if (!selectedProperty) {
-      return;
+  enquiryBtn.addEventListener(
+    "click",
+    function () {
+
+      if (!selectedProperty) {
+        return;
+      }
+
+      modalMessage.textContent =
+        `Enquiry started for ${selectedProperty.name}. Direct partner enquiries are coming next.`;
+
     }
+  );
 
-    modalMessage.textContent =
-      `Enquiry started for ${selectedProperty.name}. Direct partner enquiries are coming next.`;
-
-  }
-);
+}
 
 
 // ==============================
@@ -283,6 +328,10 @@ enquiryBtn.addEventListener(
 // ==============================
 
 function openPartnerModal() {
+
+  if (!partnerModal) {
+    return;
+  }
 
   partnerModal.classList.add("active");
 
@@ -293,7 +342,9 @@ function openPartnerModal() {
 
   document.body.classList.add("modal-open");
 
-  partnerFormMessage.textContent = "";
+  if (partnerFormMessage) {
+    partnerFormMessage.textContent = "";
+  }
 
   setTimeout(() => {
     document.querySelector("#partnerName")?.focus();
@@ -304,12 +355,14 @@ function openPartnerModal() {
 
 function closePartnerModal() {
 
-  partnerModal.classList.remove("active");
+  if (partnerModal) {
+    partnerModal.classList.remove("active");
 
-  partnerModal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
+    partnerModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+  }
 
   document.body.classList.remove("modal-open");
 
@@ -320,94 +373,239 @@ function closePartnerModal() {
 // LIST YOUR PLACE
 // ==============================
 
-listPlaceBtn.addEventListener(
-  "click",
-  function (e) {
+if (listPlaceBtn) {
 
-    e.preventDefault();
+  listPlaceBtn.addEventListener(
+    "click",
+    function (e) {
 
-    openPartnerModal();
+      e.preventDefault();
 
-  }
-);
+      openPartnerModal();
+
+    }
+  );
+
+}
 
 
 // ==============================
 // BECOME A PARTNER
 // ==============================
 
-partnerBtn.addEventListener(
-  "click",
-  function () {
+if (partnerBtn) {
 
-    openPartnerModal();
+  partnerBtn.addEventListener(
+    "click",
+    function () {
 
-  }
-);
+      openPartnerModal();
+
+    }
+  );
+
+}
 
 
 // ==============================
 // CLOSE PARTNER MODAL
 // ==============================
 
-partnerClose.addEventListener(
-  "click",
-  closePartnerModal
-);
+if (partnerClose) {
 
-partnerBackdrop.addEventListener(
-  "click",
-  closePartnerModal
-);
+  partnerClose.addEventListener(
+    "click",
+    closePartnerModal
+  );
+
+}
+
+
+if (partnerBackdrop) {
+
+  partnerBackdrop.addEventListener(
+    "click",
+    closePartnerModal
+  );
+
+}
 
 
 // ==============================
 // PARTNER FORM SUBMIT
 // ==============================
 
-partnerForm.addEventListener(
-  "submit",
-  function (e) {
+if (partnerForm) {
 
-    e.preventDefault();
+  partnerForm.addEventListener(
+    "submit",
+    function (e) {
 
-    const formData = new FormData(partnerForm);
+      e.preventDefault();
 
-    const propertyName =
-      formData.get("propertyName").trim();
+      const formData = new FormData(partnerForm);
 
-    const ownerName =
-      formData.get("ownerName").trim();
+      const getValue = (name) => {
+        const value = formData.get(name);
+        return value ? String(value).trim() : "";
+      };
 
-    const location =
-      formData.get("location").trim();
-
-    const type =
-      formData.get("type");
-
-    const price =
-      formData.get("price").trim();
-
-    const phone =
-      formData.get("phone").trim();
-
-    const email =
-      formData.get("email").trim();
-
-    const description =
-      formData.get("description").trim();
+      const propertyName = getValue("propertyName");
+      const ownerName = getValue("ownerName");
+      const location = getValue("location");
+      const type = getValue("type");
+      const price = getValue("price");
+      const phone = getValue("phone");
+      const email = getValue("email");
+      const description = getValue("description");
 
 
-    if (
-      !propertyName ||
-      !ownerName ||
-      !location ||
-      !type ||
-      !price ||
-      !phone ||
-      !email ||
-      !description
-    ) {
+      // ==========================
+      // VALIDATION
+      // ==========================
+
+      if (
+        !propertyName ||
+        !ownerName ||
+        !location ||
+        !type ||
+        !price ||
+        !phone ||
+        !email ||
+        !description
+      ) {
+
+        partnerFormMessage.textContent =
+          "Please complete all fields before submitting.";
+
+        return;
+      }
+
+
+      // ==========================
+      // EMAIL VALIDATION
+      // ==========================
+
+      const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailPattern.test(email)) {
+
+        partnerFormMessage.textContent =
+          "Please enter a valid email address.";
+
+        return;
+      }
+
+
+      // ==========================
+      // PHONE VALIDATION
+      // ==========================
+
+      const phoneDigits =
+        phone.replace(/\D/g, "");
+
+      if (phoneDigits.length < 10) {
+
+        partnerFormMessage.textContent =
+          "Please enter a valid phone number.";
+
+        return;
+      }
+
+
+      // ==========================
+      // SAVE LISTING LOCALLY
+      // ==========================
+
+      const listing = {
+        propertyName,
+        ownerName,
+        location,
+        type,
+        price,
+        phone,
+        email,
+        description,
+        submittedAt: new Date().toISOString()
+      };
+
+      const existingListings =
+        JSON.parse(
+          localStorage.getItem("himvoyaListings") || "[]"
+        );
+
+      existingListings.push(listing);
+
+      localStorage.setItem(
+        "himvoyaListings",
+        JSON.stringify(existingListings)
+      );
+
+
+      // ==========================
+      // SUCCESS MESSAGE
+      // ==========================
 
       partnerFormMessage.textContent =
-        "Please complete all
+        "Thank you! Your place has been submitted to HimVoya. Our team will review your listing and contact you soon.";
+
+      partnerForm.reset();
+
+    }
+  );
+
+}
+
+
+// ==============================
+// MODAL BACKDROP CLICK
+// ==============================
+
+document.addEventListener(
+  "click",
+  function (e) {
+
+    if (
+      propertyModal &&
+      e.target === propertyModal
+    ) {
+      closePropertyModal();
+    }
+
+    if (
+      partnerModal &&
+      e.target === partnerModal
+    ) {
+      closePartnerModal();
+    }
+
+  }
+);
+
+
+// ==============================
+// PREVENT MODAL CONTENT CLICKS
+// ==============================
+
+document.querySelectorAll(
+  ".modal-content"
+).forEach((content) => {
+
+  content.addEventListener(
+    "click",
+    function (e) {
+      e.stopPropagation();
+    }
+  );
+
+});
+
+
+// ==============================
+// PAGE READY
+// ==============================
+
+console.log(
+  "HimVoya platform loaded successfully."
+);
