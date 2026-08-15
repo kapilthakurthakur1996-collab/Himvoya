@@ -333,4 +333,54 @@ h2 em {
 ========================= */
 
 .dark-section {
-  background: #
+  background: #18251e;
+  color: white;
+  max-width: none;
+  padding: 100px 7%;
+}
+
+.dark-section p {
+  color: #b9c4bd;
+  line-height: 1.7;
+}
+
+.dark-section h2 {
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .photo {
+    height: 260px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 70px 5%;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .photo {
+    height: 240px;
+  }
+
+  .body {
+    padding: 19px;
+  }
+
+  .body h3 {
+    font-size: 21px;
+  }
+
+  .body p {
+    min-height: auto;
+  }
+}
