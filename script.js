@@ -32,8 +32,8 @@ form.addEventListener("submit", function (e) {
   let visible = 0;
 
   cards.forEach(card => {
-    const place = card.dataset.place.toLowerCase();
-    const cardType = card.dataset.type;
+    const place = (card.dataset.place || "").toLowerCase();
+    const cardType = (card.dataset.type || "").toLowerCase();
 
     const locationMatch =
       !location ||
@@ -41,8 +41,9 @@ form.addEventListener("submit", function (e) {
       location.includes(place);
 
     const typeMatch =
+      !type ||
       type === "all" ||
-      cardType === type;
+      cardType === type.toLowerCase();
 
     if (locationMatch && typeMatch) {
       card.style.display = "";
@@ -52,16 +53,68 @@ form.addEventListener("submit", function (e) {
     }
   });
 
-  if (!location && type === "all") {
-    result.textContent = "";
-    return;
+  if (visible === 0) {
+    result.textContent =
+      "No places found. Try another Himalayan destination.";
+  } else {
+    result.textContent =
+      `${visible} ${visible === 1 ? "place" : "places"} found`;
   }
 
-  result.textContent =
-    visible > 0
-      ? `${visible} result${visible > 1 ? "s" : ""} found`
-      : "No matching stays or experiences found.";
+  result.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 });
+
+
+// =========================
+// RESET SEARCH WHEN INPUTS CHANGE
+// =========================
+
+where.addEventListener("input", resetSearch);
+kind.addEventListener("change", resetSearch);
+
+function resetSearch() {
+  cards.forEach(card => {
+    card.style.display = "";
+  });
+
+  result.textContent = "";
+}
+
+
+// =========================
+// PROPERTY MODAL
+// =========================
+
+function openPropertyModal() {
+  if (!propertyModal) return;
+
+  propertyModal.classList.add("active");
+  document.body.classList.add("modal-open");
+}
+
+function closePropertyModal() {
+  if (!propertyModal) return;
+
+  propertyModal.classList.remove("active");
+  document.body.classList.remove("modal-open");
+}
+
+cards.forEach(card => {
+  card.addEventListener("click", function () {
+    openPropertyModal();
+  });
+});
+
+if (modalClose) {
+  modalClose.addEventListener("click", closePropertyModal);
+}
+
+if (modalBackdrop) {
+  modalBackdrop.addEventListener("click", closePropertyModal);
+}
 
 
 // =========================
@@ -71,40 +124,31 @@ form.addEventListener("submit", function (e) {
 function openPartnerModal() {
   if (!partnerModal) return;
 
-  partnerModal.classList.add("open");
-  partnerModal.setAttribute("aria-hidden", "false");
-
-  document.body.style.overflow = "hidden";
+  partnerModal.classList.add("active");
+  document.body.classList.add("modal-open");
 }
 
 function closePartnerModal() {
   if (!partnerModal) return;
 
-  partnerModal.classList.remove("open");
-  partnerModal.setAttribute("aria-hidden", "true");
-
-  document.body.style.overflow = "";
+  partnerModal.classList.remove("active");
+  document.body.classList.remove("modal-open");
 }
 
 if (listPlaceBtn) {
-  listPlaceBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    openPartnerModal();
-  });
+  listPlaceBtn.addEventListener("click", openPartnerModal);
 }
 
 if (partnerBtn) {
-  partnerBtn.addEventListener("click", function () {
-    openPartnerModal();
-  });
-}
-
-if (partnerBackdrop) {
-  partnerBackdrop.addEventListener("click", closePartnerModal);
+  partnerBtn.addEventListener("click", openPartnerModal);
 }
 
 if (partnerClose) {
   partnerClose.addEventListener("click", closePartnerModal);
+}
+
+if (partnerBackdrop) {
+  partnerBackdrop.addEventListener("click", closePartnerModal);
 }
 
 
@@ -116,17 +160,10 @@ if (partnerForm) {
   partnerForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const name = document.querySelector("#partnerName").value.trim();
-    const property = document.querySelector("#propertyName").value.trim();
-
-    if (!name || !property) {
+    if (partnerMessage) {
       partnerMessage.textContent =
-        "Please complete all required details.";
-      return;
+        "Thank you! Your listing request has been received. The HimVoya team will contact you soon.";
     }
-
-    partnerMessage.textContent =
-      `Thanks ${name}! Your listing request for "${property}" has been received.`;
 
     partnerForm.reset();
   });
@@ -134,82 +171,7 @@ if (partnerForm) {
 
 
 // =========================
-// PROPERTY DETAIL MODAL
-// =========================
-
-function openPropertyModal(card) {
-  if (!propertyModal) return;
-
-  const title = card.querySelector("h3")?.textContent || "";
-  const description = card.querySelector("p")?.textContent || "";
-  const location =
-    card.querySelector("footer span")?.textContent || "";
-  const price =
-    card.querySelector("footer strong")?.textContent || "";
-  const category =
-    card.querySelector("small")?.textContent || "Mountain Stay";
-
-  const photo = card.querySelector(".photo");
-
-  const modalTitle = document.querySelector("#modalTitle");
-  const modalDescription =
-    document.querySelector("#modalDescription");
-  const modalLocation =
-    document.querySelector("#modalLocation");
-  const modalPrice =
-    document.querySelector("#modalPrice");
-  const modalCategory =
-    document.querySelector("#modalCategory");
-  const modalImage =
-    document.querySelector("#modalImage");
-
-  modalTitle.textContent = title;
-  modalDescription.textContent = description;
-  modalLocation.textContent = location;
-  modalPrice.textContent = price;
-  modalCategory.textContent = category;
-
-  if (photo && modalImage) {
-    modalImage.className = "modal-image";
-    modalImage.classList.add(
-      ...[...photo.classList].filter(
-        className => className !== "photo"
-      )
-    );
-  }
-
-  propertyModal.classList.add("open");
-  propertyModal.setAttribute("aria-hidden", "false");
-
-  document.body.style.overflow = "hidden";
-}
-
-function closePropertyModal() {
-  if (!propertyModal) return;
-
-  propertyModal.classList.remove("open");
-  propertyModal.setAttribute("aria-hidden", "true");
-
-  document.body.style.overflow = "";
-}
-
-cards.forEach(card => {
-  card.addEventListener("click", function () {
-    openPropertyModal(card);
-  });
-});
-
-if (modalBackdrop) {
-  modalBackdrop.addEventListener("click", closePropertyModal);
-}
-
-if (modalClose) {
-  modalClose.addEventListener("click", closePropertyModal);
-}
-
-
-// =========================
-// ESC KEY
+// ESC KEY CLOSES MODALS
 // =========================
 
 document.addEventListener("keydown", function (e) {
@@ -221,28 +183,28 @@ document.addEventListener("keydown", function (e) {
 
 
 // =========================
-// MODAL ACTIONS
+// PROPERTY ACTION BUTTONS
 // =========================
 
-const availabilityBtn =
-  document.querySelector("#availabilityBtn");
+document.addEventListener("click", function (e) {
 
-const enquiryBtn =
-  document.querySelector("#enquiryBtn");
+  if (e.target.matches("#checkAvailability")) {
+    alert(
+      "Availability enquiries will be connected to the property partner soon."
+    );
+  }
 
-const modalMessage =
-  document.querySelector("#modalMessage");
+  if (e.target.matches("#sendEnquiry")) {
+    openPartnerModal();
+  }
 
-if (availabilityBtn) {
-  availabilityBtn.addEventListener("click", function () {
-    modalMessage.textContent =
-      "Availability requests will be connected to the property partner soon.";
-  });
-}
+});
 
-if (enquiryBtn) {
-  enquiryBtn.addEventListener("click", function () {
-    modalMessage.textContent =
-      "Enquiry feature is coming soon.";
-  });
+
+// =========================
+// INITIAL STATE
+// =========================
+
+cards.forEach(card => {
+  card.style.cursor = "pointer";
 });
