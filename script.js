@@ -3,6 +3,8 @@ const result = document.querySelector("#result");
 const cards = [...document.querySelectorAll(".card")];
 const where = document.querySelector("#where");
 const kind = document.querySelector("#kind");
+
+const listPlaceBtn = document.querySelector("#listPlaceBtn");
 const partnerBtn = document.querySelector("#partnerBtn");
 
 const propertyModal = document.querySelector("#propertyModal");
@@ -19,6 +21,12 @@ const modalPrice = document.querySelector("#modalPrice");
 const availabilityBtn = document.querySelector("#availabilityBtn");
 const enquiryBtn = document.querySelector("#enquiryBtn");
 const modalMessage = document.querySelector("#modalMessage");
+
+const partnerModal = document.querySelector("#partnerModal");
+const partnerBackdrop = document.querySelector("#partnerBackdrop");
+const partnerClose = document.querySelector("#partnerClose");
+const partnerForm = document.querySelector("#partnerForm");
+const partnerFormMessage = document.querySelector("#partnerFormMessage");
 
 let selectedProperty = null;
 
@@ -86,7 +94,7 @@ where.addEventListener("input", function () {
 
 
 // ==============================
-// PROPERTY INFORMATION
+// PROPERTY DATA
 // ==============================
 
 const propertyData = {
@@ -103,7 +111,6 @@ const propertyData = {
       "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=85"
   },
 
-
   "Forest Edge Boutique": {
     category: "BOUTIQUE MOUNTAIN STAY",
     location: "Chamba, Himachal Pradesh",
@@ -115,7 +122,6 @@ const propertyData = {
     image:
       "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=85"
   },
-
 
   "Riverside Haven": {
     category: "RIVERSIDE STAY",
@@ -157,22 +163,16 @@ cards.forEach((card) => {
       ...data
     };
 
-
     modalCategory.textContent = data.category;
-
     modalTitle.textContent = name;
-
     modalLocation.textContent = data.location;
-
     modalDescription.textContent = data.description;
-
     modalPrice.textContent = data.price;
 
     modalImage.style.backgroundImage =
       `url("${data.image}")`;
 
     modalMessage.textContent = "";
-
 
     propertyModal.classList.add("active");
 
@@ -189,7 +189,7 @@ cards.forEach((card) => {
 
 
 // ==============================
-// CLOSE PROPERTY DETAIL
+// CLOSE PROPERTY MODAL
 // ==============================
 
 function closePropertyModal() {
@@ -205,12 +205,10 @@ function closePropertyModal() {
 
 }
 
-
 modalClose.addEventListener(
   "click",
   closePropertyModal
 );
-
 
 modalBackdrop.addEventListener(
   "click",
@@ -218,12 +216,24 @@ modalBackdrop.addEventListener(
 );
 
 
+// ==============================
+// CHECK ESCAPE KEY
+// ==============================
+
 document.addEventListener(
   "keydown",
   function (e) {
 
     if (e.key === "Escape") {
-      closePropertyModal();
+
+      if (propertyModal.classList.contains("active")) {
+        closePropertyModal();
+      }
+
+      if (partnerModal.classList.contains("active")) {
+        closePartnerModal();
+      }
+
     }
 
   }
@@ -269,24 +279,135 @@ enquiryBtn.addEventListener(
 
 
 // ==============================
-// PARTNER BUTTON
+// PARTNER MODAL
+// ==============================
+
+function openPartnerModal() {
+
+  partnerModal.classList.add("active");
+
+  partnerModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  document.body.classList.add("modal-open");
+
+  partnerFormMessage.textContent = "";
+
+  setTimeout(() => {
+    document.querySelector("#partnerName")?.focus();
+  }, 100);
+
+}
+
+
+function closePartnerModal() {
+
+  partnerModal.classList.remove("active");
+
+  partnerModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.classList.remove("modal-open");
+
+}
+
+
+// ==============================
+// LIST YOUR PLACE
+// ==============================
+
+listPlaceBtn.addEventListener(
+  "click",
+  function (e) {
+
+    e.preventDefault();
+
+    openPartnerModal();
+
+  }
+);
+
+
+// ==============================
+// BECOME A PARTNER
 // ==============================
 
 partnerBtn.addEventListener(
   "click",
   function () {
 
-    document.querySelector("#partner").scrollIntoView({
-      behavior: "smooth"
-    });
-
-    setTimeout(() => {
-
-      alert(
-        "Welcome to HimVoya Partners!\n\nHotel, homestay or local experience owners will soon be able to submit their property directly."
-      );
-
-    }, 500);
+    openPartnerModal();
 
   }
 );
+
+
+// ==============================
+// CLOSE PARTNER MODAL
+// ==============================
+
+partnerClose.addEventListener(
+  "click",
+  closePartnerModal
+);
+
+partnerBackdrop.addEventListener(
+  "click",
+  closePartnerModal
+);
+
+
+// ==============================
+// PARTNER FORM SUBMIT
+// ==============================
+
+partnerForm.addEventListener(
+  "submit",
+  function (e) {
+
+    e.preventDefault();
+
+    const formData = new FormData(partnerForm);
+
+    const propertyName =
+      formData.get("propertyName").trim();
+
+    const ownerName =
+      formData.get("ownerName").trim();
+
+    const location =
+      formData.get("location").trim();
+
+    const type =
+      formData.get("type");
+
+    const price =
+      formData.get("price").trim();
+
+    const phone =
+      formData.get("phone").trim();
+
+    const email =
+      formData.get("email").trim();
+
+    const description =
+      formData.get("description").trim();
+
+
+    if (
+      !propertyName ||
+      !ownerName ||
+      !location ||
+      !type ||
+      !price ||
+      !phone ||
+      !email ||
+      !description
+    ) {
+
+      partnerFormMessage.textContent =
+        "Please complete all
