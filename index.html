@@ -17,8 +17,12 @@
 
 <body>
 
-  <!-- NAVIGATION -->
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
   <header class="nav">
+
     <a class="logo" href="#">
       <i>H</i> HimVoya
     </a>
@@ -30,13 +34,17 @@
       <a href="#partner">For partners</a>
     </nav>
 
-    <a class="outline" href="#partner">
+    <a class="outline" href="#partner" id="listPlaceBtn">
       List your place
     </a>
+
   </header>
 
 
-  <!-- HERO -->
+  <!-- =========================
+       HERO
+  ========================== -->
+
   <section class="hero">
 
     <div class="shade"></div>
@@ -59,20 +67,29 @@
 
 
       <!-- SEARCH -->
+
       <form class="search" id="search">
 
         <div>
-          <label>WHERE</label>
+          <label for="where">WHERE</label>
+
           <input
             id="where"
+            type="text"
             placeholder="Try Chamba, Himachal..."
+            autocomplete="off"
           >
         </div>
 
+
         <div>
-          <label>LOOKING FOR</label>
+
+          <label for="kind">
+            LOOKING FOR
+          </label>
 
           <select id="kind">
+
             <option value="all">
               Stays & experiences
             </option>
@@ -84,8 +101,11 @@
             <option value="experience">
               Experiences
             </option>
+
           </select>
+
         </div>
+
 
         <button type="submit">
           Explore <b>→</b>
@@ -93,9 +113,11 @@
 
       </form>
 
+
       <p id="result"></p>
 
     </div>
+
 
     <span class="scroll">
       SCROLL TO EXPLORE ↓
@@ -104,7 +126,10 @@
   </section>
 
 
-  <!-- STAYS -->
+  <!-- =========================
+       STAYS
+  ========================== -->
+
   <section class="section" id="stays">
 
     <div class="head">
@@ -122,6 +147,7 @@
 
       </div>
 
+
       <p>
         Boutique hotels, valley-view stays and local homes
         selected for travellers who want more than a room.
@@ -131,10 +157,12 @@
 
 
     <!-- PROPERTY CARDS -->
+
     <div class="cards" id="cards">
 
 
       <!-- PROPERTY 1 -->
+
       <article
         class="card"
         data-place="himachal"
@@ -177,6 +205,7 @@
 
 
       <!-- PROPERTY 2 -->
+
       <article
         class="card"
         data-place="chamba"
@@ -219,6 +248,7 @@
 
 
       <!-- PROPERTY 3 -->
+
       <article
         class="card"
         data-place="himachal"
@@ -264,7 +294,10 @@
   </section>
 
 
-  <!-- EXPERIENCES -->
+  <!-- =========================
+       EXPERIENCES
+  ========================== -->
+
   <section
     class="dark-section"
     id="experiences"
@@ -284,6 +317,7 @@
 
     </div>
 
+
     <p>
       Build a journey around the places, people and experiences
       that make the mountains special — hidden villages, local
@@ -293,7 +327,10 @@
   </section>
 
 
-  <!-- HOW IT WORKS -->
+  <!-- =========================
+       HOW IT WORKS
+  ========================== -->
+
   <section
     class="section"
     id="how"
@@ -360,7 +397,10 @@
   </section>
 
 
-  <!-- PARTNER -->
+  <!-- =========================
+       PARTNER
+  ========================== -->
+
   <section
     class="partner"
     id="partner"
@@ -384,14 +424,21 @@
 
     </div>
 
-    <button id="partnerBtn">
+
+    <button
+      id="partnerBtn"
+      type="button"
+    >
       Become a partner →
     </button>
 
   </section>
 
 
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer>
 
     <a class="logo" href="#">
@@ -409,7 +456,10 @@
   </footer>
 
 
-  <!-- PROPERTY DETAIL MODAL -->
+  <!-- =========================
+       PROPERTY DETAIL MODAL
+  ========================== -->
+
   <div
     class="property-modal"
     id="propertyModal"
@@ -422,12 +472,18 @@
     ></div>
 
 
-    <div class="property-dialog">
+    <div
+      class="property-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
 
       <button
         class="modal-close"
         id="modalClose"
-        aria-label="Close"
+        aria-label="Close property details"
+        type="button"
       >
         ×
       </button>
@@ -527,6 +583,7 @@
           <button
             class="primary-action"
             id="availabilityBtn"
+            type="button"
           >
             Check Availability →
           </button>
@@ -535,6 +592,7 @@
           <button
             class="secondary-action"
             id="enquiryBtn"
+            type="button"
           >
             Send Enquiry
           </button>
@@ -545,6 +603,7 @@
         <p
           class="modal-note"
           id="modalMessage"
+          aria-live="polite"
         ></p>
 
       </div>
@@ -554,9 +613,32 @@
   </div>
 
 
-  <!-- JAVASCRIPT -->
-  <script src="script.js"></script>
+  <!-- =========================
+       PARTNER REGISTRATION MODAL
+  ========================== -->
 
-</body>
+  <div
+    class="partner-modal"
+    id="partnerModal"
+    aria-hidden="true"
+  >
 
-</html>
+    <div
+      class="partner-backdrop"
+      id="partnerBackdrop"
+    ></div>
+
+
+    <div
+      class="partner-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="partnerTitle"
+    >
+
+      <button
+        class="partner-close"
+        id="partnerClose"
+        type="button"
+        aria-label="Close partner form"
+      >
