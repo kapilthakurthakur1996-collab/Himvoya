@@ -56,7 +56,7 @@ if (form) {
   });
 }
 
-// Reset results when search box is cleared
+// Reset when search box is cleared
 if (where) {
   where.addEventListener("input", function () {
     if (!where.value.trim()) {
@@ -77,7 +77,8 @@ cards.forEach((card) => {
 
   card.addEventListener("click", function () {
     const name =
-      card.querySelector("h3")?.textContent || "HimVoya Stay";
+      card.querySelector("h3")?.textContent ||
+      "HimVoya Stay";
 
     const description =
       card.querySelector(".body p")?.textContent ||
@@ -100,10 +101,10 @@ cards.forEach((card) => {
 // Partner button
 if (partnerBtn) {
   partnerBtn.addEventListener("click", function () {
-    const partnerSection = document.querySelector("#partner");
+    const partner = document.querySelector("#partner");
 
-    if (partnerSection) {
-      partnerSection.scrollIntoView({
+    if (partner) {
+      partner.scrollIntoView({
         behavior: "smooth"
       });
     }
@@ -114,4 +115,4 @@ if (partnerBtn) {
       );
     }, 500);
   });
-}
+});
