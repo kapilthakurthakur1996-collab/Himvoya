@@ -642,3 +642,140 @@
         type="button"
         aria-label="Close partner form"
       >
+                ×
+      </button>
+
+      <div class="partner-content">
+
+        <p class="eyebrow dark">
+          JOIN HIMVOYA
+        </p>
+
+        <h2 id="partnerTitle">
+          List your place.
+        </h2>
+
+        <p>
+          Tell us about your property or Himalayan experience.
+          We'll review your details and connect with you.
+        </p>
+
+        <form id="partnerForm">
+
+          <label for="partnerName">
+            YOUR NAME
+          </label>
+
+          <input
+            id="partnerName"
+            type="text"
+            placeholder="Your full name"
+            required
+          >
+
+          <label for="propertyName">
+            PROPERTY / EXPERIENCE NAME
+          </label>
+
+          <input
+            id="propertyName"
+            type="text"
+            placeholder="e.g. Mountain View Retreat"
+            required
+          >
+
+          <label for="propertyLocation">
+            LOCATION
+          </label>
+
+          <input
+            id="propertyLocation"
+            type="text"
+            placeholder="e.g. Chamba, Himachal Pradesh"
+            required
+          >
+
+          <label for="propertyType">
+            WHAT ARE YOU LISTING?
+          </label>
+
+          <select id="propertyType" required>
+
+            <option value="">
+              Select one
+            </option>
+
+            <option value="stay">
+              Stay / Hotel / Homestay
+            </option>
+
+            <option value="experience">
+              Local Experience
+            </option>
+
+          </select>
+
+          <label for="propertyPrice">
+            STARTING PRICE
+          </label>
+
+          <input
+            id="propertyPrice"
+            type="number"
+            min="0"
+            placeholder="₹ per night / person"
+            required
+          >
+
+          <label for="partnerPhone">
+            PHONE / WHATSAPP
+          </label>
+
+          <input
+            id="partnerPhone"
+            type="tel"
+            placeholder="Your contact number"
+            required
+          >
+
+          <label for="propertyDescription">
+            TELL US ABOUT YOUR PLACE
+          </label>
+
+          <textarea
+            id="propertyDescription"
+            rows="5"
+            placeholder="Describe your property, views, rooms, experiences..."
+            required
+          ></textarea>
+
+          <button
+            class="primary-action"
+            type="submit"
+          >
+            Submit Listing →
+          </button>
+
+          <p
+            id="partnerMessage"
+            class="modal-note"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script src="script.js"></script>
+
+</body>
+</html>
