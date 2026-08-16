@@ -1,33 +1,22 @@
 /* =========================================================
-   HIMVOYA — AI VIRTUAL TOUR v2
-   ---------------------------------------------------------
-   Destination experience:
-   • YouTube destination video
-   • Google Maps
-   • AI-generated realistic visuals
-   • Real fallback destination images
-   • Gallery lightbox
-   • Loading / error states
-   • Safe destination matching
-   • Video cleanup on close
+   HIMVOYA — AI VIRTUAL TOUR v3
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   const tourData = {
-
     chamba: {
       name: "Chamba",
       video: "IIORsROW9Hk",
       map: "Chamba, Himachal Pradesh, India",
 
       prompt:
-        "Ultra realistic cinematic travel photography of Chamba Himachal Pradesh India, ancient temples, Ravi river, Himalayan mountains, green valleys, traditional Himachali architecture, natural daylight, authentic Indian travel destination, photorealistic, 8k",
+        "Ultra realistic cinematic travel photography of Chamba Himachal Pradesh India, Ravi river, Himalayan mountains, green valleys, ancient temples, traditional Himachali architecture, authentic Indian travel destination, photorealistic, natural daylight, 8k",
 
       fallbackImages: [
-        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85"
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1400&q=85",
+        "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1400&q=85",
+        "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1400&q=85"
       ]
     },
 
@@ -37,12 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
       map: "Manali, Himachal Pradesh, India",
 
       prompt:
-        "Ultra realistic cinematic travel photography of Manali Himachal Pradesh India, snow covered Himalayan peaks, pine forests, Beas river, mountain roads, traditional Himachali villages, dramatic natural light, authentic Indian travel destination, photorealistic, 8k",
+        "Ultra realistic cinematic travel photography of Manali Himachal Pradesh India, snow covered Himalayan peaks, pine forests, Beas river, mountain roads, traditional Himachali villages, authentic Indian travel destination, photorealistic, natural daylight, 8k",
 
       fallbackImages: [
-        "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1622308644420-b20142dc993c?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85"
+        "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1400&q=85",
+        "https://images.unsplash.com/photo-1622308644420-b20142dc993c?auto=format&fit=crop&w=1400&q=85",
+        "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1400&q=85"
       ]
     },
 
@@ -52,20 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
       map: "Spiti Valley, Himachal Pradesh, India",
 
       prompt:
-        "Ultra realistic cinematic travel photography of Spiti Valley Himachal Pradesh India, high altitude cold desert, rugged Himalayan mountains, ancient Buddhist monasteries, remote villages, winding mountain roads, blue sky, dramatic natural light, authentic travel photography, photorealistic, 8k",
+        "Ultra realistic cinematic travel photography of Spiti Valley Himachal Pradesh India, high altitude cold desert, rugged Himalayan mountains, ancient Buddhist monasteries, remote villages, winding mountain roads, blue sky, dramatic natural light, authentic Indian travel photography, photorealistic, 8k",
 
       fallbackImages: [
-        "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85"
+        "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?auto=format&fit=crop&w=1400&q=85",
+        "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1400&q=85",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85"
       ]
     }
-
   };
 
 
   /* =========================================================
-     ELEMENTS
+     FIND EXISTING HTML ELEMENTS
      ========================================================= */
 
   const tourButton =
@@ -86,21 +74,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const destinationTitle =
     document.querySelector("#destinationTitle");
 
-  const destinationClose =
-    document.querySelector(".destination-close");
-
-  const destinationBackdrop =
-    document.querySelector("#destinationExperienceBackdrop");
-
 
   if (!tourButton || !tourSection) {
-    console.warn("HimVoya Virtual Tour: required elements not found.");
+    console.warn(
+      "HimVoya Virtual Tour: required elements not found."
+    );
+
     return;
   }
 
 
   /* =========================================================
-     DESTINATION DETECTION
+     DESTINATION
      ========================================================= */
 
   function getCurrentDestination() {
@@ -123,10 +108,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
-     AI IMAGE GENERATION
+     SAFE HTML
      ========================================================= */
 
-  async function fetchAIImages(prompt) {
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  /* =========================================================
+     AI IMAGE API
+     ========================================================= */
+
+  async function generateAIImages(destination) {
 
     try {
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
 
           body: JSON.stringify({
-            prompt: prompt,
+            prompt: destination.prompt,
             count: 3
           })
         }
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) {
         throw new Error(
-          `AI image request failed: ${response.status}`
+          `AI image API error: ${response.status}`
         );
       }
 
@@ -162,100 +162,85 @@ document.addEventListener("DOMContentLoaded", () => {
         !data ||
         !Array.isArray(data.images)
       ) {
-        throw new Error("Invalid AI image response.");
+        throw new Error(
+          "Invalid AI image response."
+        );
       }
 
 
-      return data.images.filter(Boolean);
+      return data.images.filter(
+        image =>
+          typeof image === "string" &&
+          image.trim() !== ""
+      );
 
     } catch (error) {
 
       console.warn(
-        "HimVoya AI visuals unavailable:",
+        "HimVoya AI images unavailable:",
         error
       );
 
       return [];
-
     }
-
   }
 
 
   /* =========================================================
-     GALLERY LOADING
+     LOADING
      ========================================================= */
 
-  function renderGalleryLoading(destination) {
+  function showGalleryLoading(destination) {
 
     if (!tourGallery) return;
 
     tourGallery.innerHTML = `
 
-      <div class="tour-gallery-status">
+      <div class="himvoya-tour-loading">
 
-        <div class="tour-loader"></div>
+        <div class="himvoya-tour-spinner"></div>
 
-        <strong>
-          Creating your virtual experience...
-        </strong>
+        <h3>
+          Creating your virtual experience
+        </h3>
 
         <p>
-          HimVoya AI is preparing realistic views of
-          ${destination.name}.
+          HimVoya AI is preparing ${escapeHTML(
+            destination.name
+          )} for you...
         </p>
 
       </div>
 
     `;
-
   }
 
 
   /* =========================================================
-     GALLERY ERROR / FALLBACK
-     ========================================================= */
-
-  function renderGalleryFallback(
-    destination
-  ) {
-
-    if (!tourGallery) return;
-
-    renderGallery(
-      destination.fallbackImages,
-      destination.name,
-      true
-    );
-
-  }
-
-
-  /* =========================================================
-     GALLERY RENDER
+     RENDER GALLERY
      ========================================================= */
 
   function renderGallery(
     images,
-    destinationName,
-    fallback = false
+    destination,
+    isFallback = false
   ) {
 
     if (!tourGallery) return;
 
 
-    if (!images || !images.length) {
+    if (!images.length) {
 
       tourGallery.innerHTML = `
 
-        <div class="tour-gallery-status">
+        <div class="himvoya-tour-error">
 
-          <strong>
+          <h3>
             Visual experience unavailable
-          </strong>
+          </h3>
 
           <p>
-            Please try the virtual tour again.
+            Please try the Virtual Tour again.
           </p>
 
         </div>
@@ -268,53 +253,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tourGallery.innerHTML = `
 
-      <div class="tour-gallery-header">
+      <div class="himvoya-gallery-heading">
 
         <div>
 
-          <p class="eyebrow dark">
-            ${fallback ? "DESTINATION VISUALS" : "AI EXPERIENCE"}
-          </p>
+          <small>
+            ${isFallback
+              ? "DESTINATION PREVIEW"
+              : "AI DESTINATION EXPERIENCE"}
+          </small>
 
-          <h4>
-            Explore ${destinationName}
-          </h4>
+          <h3>
+            Explore ${escapeHTML(destination.name)}
+          </h3>
 
         </div>
 
-        ${
-          fallback
-            ? `<span class="tour-gallery-badge">
-                 Destination Preview
-               </span>`
-            : `<span class="tour-gallery-badge">
-                 ✦ AI Generated
-               </span>`
-        }
+        <span>
+          ${isFallback
+            ? "HimVoya Preview"
+            : "✦ AI"}
+        </span>
 
       </div>
 
 
-      <div class="tour-gallery-grid">
+      <div class="himvoya-gallery-grid">
 
-        ${images.map((url, index) => `
+        ${images.map((image, index) => `
 
           <button
             type="button"
-            class="tour-gallery-item"
-            data-image="${escapeAttribute(url)}"
-            aria-label="View ${destinationName} image ${index + 1}"
+            class="himvoya-gallery-card"
+            data-image="${escapeHTML(image)}"
+            aria-label="Open ${escapeHTML(
+              destination.name
+            )} photo ${index + 1}"
           >
 
             <img
-              src="${escapeAttribute(url)}"
-              alt="${escapeAttribute(destinationName)} Himalayan view"
+              src="${escapeHTML(image)}"
+              alt="${escapeHTML(
+                destination.name
+              )} destination view"
               loading="lazy"
             />
 
-            <span>
-              View
-            </span>
+            <div class="himvoya-gallery-overlay">
+              <span>View photo</span>
+            </div>
 
           </button>
 
@@ -325,71 +312,105 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
 
-    attachGalleryEvents();
+    attachPhotoClicks(destination);
+  }
+
+
+  /* =========================================================
+     PHOTO CLICK
+     ========================================================= */
+
+  function attachPhotoClicks(destination) {
+
+    const cards =
+      tourGallery.querySelectorAll(
+        ".himvoya-gallery-card"
+      );
+
+
+    cards.forEach(card => {
+
+      card.addEventListener(
+        "click",
+        event => {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+
+          const image =
+            card.getAttribute("data-image");
+
+
+          if (!image) return;
+
+
+          openPhotoViewer(
+            image,
+            destination.name
+          );
+
+        }
+      );
+
+    });
 
   }
 
 
   /* =========================================================
-     HTML ATTRIBUTE SAFETY
+     FULLSCREEN PHOTO VIEWER
      ========================================================= */
 
-  function escapeAttribute(value) {
-
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/"/g, "&quot;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-
-  }
-
-
-  /* =========================================================
-     IMAGE LIGHTBOX
-     ========================================================= */
-
-  function openImageViewer(
-    imageUrl,
+  function openPhotoViewer(
+    image,
     destinationName
   ) {
 
-    const existing =
-      document.querySelector("#himvoyaImageViewer");
+    const oldViewer =
+      document.querySelector(
+        "#himvoyaPhotoViewer"
+      );
 
-    if (existing) {
-      existing.remove();
+
+    if (oldViewer) {
+      oldViewer.remove();
     }
 
 
     const viewer =
       document.createElement("div");
 
+
     viewer.id =
-      "himvoyaImageViewer";
+      "himvoyaPhotoViewer";
+
 
     viewer.innerHTML = `
 
-      <div class="himvoya-image-viewer-backdrop">
+      <div class="himvoya-photo-backdrop">
 
         <button
           type="button"
-          class="himvoya-image-close"
-          aria-label="Close image"
+          class="himvoya-photo-close"
+          aria-label="Close photo"
         >
           ×
         </button>
 
-        <div class="himvoya-image-viewer-content">
+
+        <div class="himvoya-photo-content">
 
           <img
-            src="${escapeAttribute(imageUrl)}"
-            alt="${escapeAttribute(destinationName)}"
+            src="${escapeHTML(image)}"
+            alt="${escapeHTML(destinationName)}"
           />
 
-          <p>
-            ${escapeAttribute(destinationName)}
-          </p>
+          <div class="himvoya-photo-caption">
+
+            ${escapeHTML(destinationName)}
+
+          </div>
 
         </div>
 
@@ -401,26 +422,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(viewer);
 
 
-    const close =
+    const closeButton =
       viewer.querySelector(
-        ".himvoya-image-close"
+        ".himvoya-photo-close"
       );
+
 
     const backdrop =
       viewer.querySelector(
-        ".himvoya-image-viewer-backdrop"
+        ".himvoya-photo-backdrop"
       );
 
 
-    close?.addEventListener(
+    closeButton.addEventListener(
       "click",
       () => viewer.remove()
     );
 
 
-    backdrop?.addEventListener(
+    backdrop.addEventListener(
       "click",
-      (event) => {
+      event => {
 
         if (
           event.target === backdrop
@@ -432,65 +454,26 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    document.addEventListener(
-      "keydown",
-      function escapeHandler(event) {
+    function escapeKey(event) {
 
-        if (event.key === "Escape") {
+      if (event.key === "Escape") {
 
-          viewer.remove();
+        viewer.remove();
 
-          document.removeEventListener(
-            "keydown",
-            escapeHandler
-          );
-
-        }
+        document.removeEventListener(
+          "keydown",
+          escapeKey
+        );
 
       }
+
+    }
+
+
+    document.addEventListener(
+      "keydown",
+      escapeKey
     );
-
-  }
-
-
-  /* =========================================================
-     GALLERY EVENTS
-     ========================================================= */
-
-  function attachGalleryEvents() {
-
-    const items =
-      tourGallery.querySelectorAll(
-        ".tour-gallery-item"
-      );
-
-
-    items.forEach(item => {
-
-      item.addEventListener(
-        "click",
-        () => {
-
-          const image =
-            item.dataset.image;
-
-          const destination =
-            getCurrentDestination();
-
-
-          if (image) {
-
-            openImageViewer(
-              image,
-              destination.name
-            );
-
-          }
-
-        }
-      );
-
-    });
 
   }
 
@@ -531,85 +514,64 @@ document.addEventListener("DOMContentLoaded", () => {
      OPEN TOUR
      ========================================================= */
 
-  tourButton.addEventListener(
-    "click",
-    async () => {
+  async function openTour() {
 
-      const destination =
-        getCurrentDestination();
+    const destination =
+      getCurrentDestination();
 
 
-      /* Show section */
-
-      tourSection.classList.add(
-        "active"
-      );
+    tourSection.classList.add(
+      "active"
+    );
 
 
-      /* Load video */
+    loadVideo(destination);
 
-      loadVideo(destination);
+    loadMap(destination);
+
+    showGalleryLoading(
+      destination
+    );
 
 
-      /* Load map */
+    tourSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
 
-      loadMap(destination);
 
-
-      /* Loading state */
-
-      renderGalleryLoading(
+    const aiImages =
+      await generateAIImages(
         destination
       );
 
 
-      /* Scroll */
+    if (aiImages.length > 0) {
 
-      tourSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+      renderGallery(
+        aiImages,
+        destination,
+        false
+      );
 
+    } else {
 
-      /* AI generation */
-
-      const aiImages =
-        await fetchAIImages(
-          destination.prompt
-        );
-
-
-      /* AI successful */
-
-      if (aiImages.length) {
-
-        renderGallery(
-          aiImages,
-          destination.name,
-          false
-        );
-
-      }
-
-      /* AI failed → fallback */
-
-      else {
-
-        renderGalleryFallback(
-          destination
-        );
-
-      }
+      renderGallery(
+        destination.fallbackImages,
+        destination,
+        true
+      );
 
     }
-  );
+
+  }
 
 
   /* =========================================================
-     STOP TOUR
+     CLOSE TOUR
      ========================================================= */
 
-  function stopTour() {
+  function closeTour() {
 
     if (tourVideoFrame) {
       tourVideoFrame.src = "";
@@ -634,62 +596,354 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
-     CLOSE EVENTS
+     OPEN BUTTON
      ========================================================= */
 
-  destinationClose?.addEventListener(
+  tourButton.addEventListener(
     "click",
-    stopTour
-  );
+    event => {
 
+      event.preventDefault();
+      event.stopPropagation();
 
-  destinationBackdrop?.addEventListener(
-    "click",
-    stopTour
+      openTour();
+
+    }
   );
 
 
   /* =========================================================
-     OPTIONAL GLOBAL ACCESS
-     Useful later for AI / itinerary integration.
+     CLOSE EXISTING MODAL BUTTONS
+     ========================================================= */
+
+  document
+    .querySelectorAll(
+      ".destination-close"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        closeTour
+      );
+
+    });
+
+
+  /* =========================================================
+     BACKDROP
+     ========================================================= */
+
+  const backdrop =
+    document.querySelector(
+      "#destinationExperienceBackdrop"
+    );
+
+
+  backdrop?.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target === backdrop
+      ) {
+
+        closeTour();
+
+      }
+
+    }
+  );
+
+
+  /* =========================================================
+     GLOBAL API
      ========================================================= */
 
   window.HimVoyaVirtualTour = {
 
     open(destinationName) {
 
-      const normalized =
+      const name =
         String(destinationName || "")
           .toLowerCase();
 
 
-      const destination =
-        normalized.includes("manali")
-          ? tourData.manali
-          : normalized.includes("spiti")
-            ? tourData.spiti
-            : tourData.chamba;
+      if (
+        name.includes("manali")
+      ) {
 
+        if (destinationTitle) {
+          destinationTitle.textContent =
+            "Manali";
+        }
 
-      if (destinationTitle) {
-        destinationTitle.textContent =
-          destination.name;
+      } else if (
+        name.includes("spiti")
+      ) {
+
+        if (destinationTitle) {
+          destinationTitle.textContent =
+            "Spiti Valley";
+        }
+
+      } else {
+
+        if (destinationTitle) {
+          destinationTitle.textContent =
+            "Chamba";
+        }
+
       }
 
 
-      tourButton.click();
+      openTour();
 
     },
 
-    stop() {
-      stopTour();
+
+    close() {
+
+      closeTour();
+
     }
 
   };
 
 
+  /* =========================================================
+     DYNAMIC CSS
+     ---------------------------------------------------------
+     No need to edit styles.css separately.
+     ========================================================= */
+
+  if (
+    !document.querySelector(
+      "#himvoyaVirtualTourStyles"
+    )
+  ) {
+
+    const style =
+      document.createElement("style");
+
+
+    style.id =
+      "himvoyaVirtualTourStyles";
+
+
+    style.textContent = `
+
+      .himvoya-gallery-grid {
+        display: grid;
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+
+      .himvoya-gallery-card {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 14px;
+      }
+
+
+      .himvoya-gallery-card img {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition:
+          transform 0.3s ease;
+      }
+
+
+      .himvoya-gallery-card:hover img {
+        transform: scale(1.05);
+      }
+
+
+      .himvoya-gallery-overlay {
+        position: absolute;
+        inset: auto 0 0 0;
+        padding: 28px 12px 12px;
+        background:
+          linear-gradient(
+            transparent,
+            rgba(0,0,0,.72)
+          );
+        color: white;
+        text-align: left;
+        opacity: 0;
+        transition: opacity .25s ease;
+      }
+
+
+      .himvoya-gallery-card:hover
+      .himvoya-gallery-overlay {
+        opacity: 1;
+      }
+
+
+      .himvoya-gallery-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+      }
+
+
+      .himvoya-gallery-heading small {
+        display: block;
+        font-size: 11px;
+        letter-spacing: .12em;
+        opacity: .65;
+      }
+
+
+      .himvoya-gallery-heading h3 {
+        margin: 5px 0 0;
+      }
+
+
+      .himvoya-gallery-heading > span {
+        font-size: 12px;
+        padding: 7px 10px;
+        border-radius: 20px;
+        background: rgba(0,0,0,.07);
+        white-space: nowrap;
+      }
+
+
+      .himvoya-tour-loading,
+      .himvoya-tour-error {
+        text-align: center;
+        padding: 35px 20px;
+      }
+
+
+      .himvoya-tour-spinner {
+        width: 34px;
+        height: 34px;
+        margin: 0 auto 15px;
+        border: 3px solid rgba(0,0,0,.12);
+        border-top-color: currentColor;
+        border-radius: 50%;
+        animation:
+          himvoyaSpin .8s linear infinite;
+      }
+
+
+      @keyframes himvoyaSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+
+      #himvoyaPhotoViewer {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+      }
+
+
+      .himvoya-photo-backdrop {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25px;
+        background: rgba(0,0,0,.92);
+      }
+
+
+      .himvoya-photo-content {
+        max-width: 95vw;
+        max-height: 92vh;
+        text-align: center;
+      }
+
+
+      .himvoya-photo-content img {
+        display: block;
+        max-width: 95vw;
+        max-height: 84vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 12px;
+      }
+
+
+      .himvoya-photo-caption {
+        margin-top: 12px;
+        color: white;
+        font-size: 14px;
+      }
+
+
+      .himvoya-photo-close {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        width: 46px;
+        height: 46px;
+        border: 0;
+        border-radius: 50%;
+        background: white;
+        color: #111;
+        font-size: 30px;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 2;
+      }
+
+
+      @media (max-width: 700px) {
+
+        .himvoya-gallery-grid {
+          grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+
+        .himvoya-gallery-card img {
+          height: 170px;
+        }
+
+
+        .himvoya-gallery-heading {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+
+        .himvoya-photo-backdrop {
+          padding: 12px;
+        }
+
+      }
+
+    `;
+
+
+    document.head.appendChild(style);
+
+  }
+
+
   console.log(
-    "HimVoya Virtual Tour v2 loaded successfully."
+    "HimVoya Virtual Tour v3 loaded successfully."
   );
 
 });
