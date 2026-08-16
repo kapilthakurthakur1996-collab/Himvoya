@@ -1,7 +1,9 @@
 /* =========================================================
-   HIMVOYA — MAIN JAVASCRIPT
-   Search + Property Modal + Partner Modal
-   + AI Destination Experience
+   HIMVOYA — COMPLETE MAIN JAVASCRIPT
+   Search
+   Property Modal
+   Partner Modal
+   AI Destination Experience
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -78,12 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
           (card.dataset.place || "").toLowerCase();
 
         const type =
-          (card.dataset.type || "").toLowerCase();
+          card.dataset.type || "";
 
         const placeMatch =
           !searchText ||
           place.includes(searchText) ||
-          searchText.includes(place);
+          searchText.includes(place) ||
+          (
+            searchText.includes("himachal") &&
+            place.includes("himachal")
+          );
 
         const typeMatch =
           selectedType === "all" ||
@@ -102,18 +108,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
 
-      if (
-        !searchText &&
-        selectedType === "all"
-      ) {
+      if (!searchText && selectedType === "all") {
 
         if (result) {
           result.textContent = "";
         }
 
-        document.querySelector("#stays")?.scrollIntoView({
-          behavior: "smooth"
-        });
+        document
+          .querySelector("#stays")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
 
         return;
       }
@@ -122,23 +127,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (visibleCount > 0) {
 
         if (result) {
+
           result.textContent =
             `${visibleCount} ${
               visibleCount === 1
                 ? "place"
                 : "places"
             } found.`;
+
         }
 
-        document.querySelector("#stays")?.scrollIntoView({
-          behavior: "smooth"
-        });
+        document
+          .querySelector("#stays")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
 
       } else {
 
         if (result) {
+
           result.textContent =
             "We couldn't find that yet. Try Chamba, Himachal or another destination.";
+
         }
 
       }
@@ -156,9 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     where.addEventListener("input", () => {
 
-      if (
-        where.value.trim() === ""
-      ) {
+      if (where.value.trim() === "") {
 
         cards.forEach(card => {
           card.style.display = "";
@@ -185,11 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       category: "MOUNTAIN STAY",
 
-      location:
-        "Himachal Pradesh",
+      location: "Himachal Pradesh",
 
-      price:
-        "₹2,499 / night",
+      price: "₹2,499 / night",
 
       description:
         "Quiet mornings, panoramic Himalayan peaks and warm local hospitality. A peaceful base for travellers who want to slow down and reconnect with the mountains.",
@@ -202,14 +209,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "Forest Edge Boutique": {
 
-      category:
-        "BOUTIQUE STAY",
+      category: "BOUTIQUE STAY",
 
-      location:
-        "Chamba, Himachal Pradesh",
+      location: "Chamba, Himachal Pradesh",
 
-      price:
-        "₹2,999 / night",
+      price: "₹2,999 / night",
 
       description:
         "A peaceful forest-edge retreat designed for slow travel, hiking, stargazing and discovering the quieter side of Chamba.",
@@ -222,14 +226,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "Riverside Haven": {
 
-      category:
-        "RIVERSIDE STAY",
+      category: "RIVERSIDE STAY",
 
-      location:
-        "Himachal Pradesh",
+      location: "Himachal Pradesh",
 
-      price:
-        "₹2,299 / night",
+      price: "₹2,299 / night",
 
       description:
         "Wake up beside the river and explore hidden Himalayan villages, local food and peaceful mountain landscapes.",
@@ -243,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
-     PROPERTY MODAL
+     OPEN PROPERTY
   ========================================================= */
 
   function openProperty(card) {
@@ -272,7 +273,8 @@ document.addEventListener("DOMContentLoaded", () => {
       propertyData[title] || {
 
         category:
-          card.querySelector(".photo span")?.textContent.trim() ||
+          card.querySelector(".photo span")
+            ?.textContent.trim() ||
           "HIMALAYAN STAY",
 
         location:
@@ -284,7 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
         description:
           fallbackDescription,
 
-        image: ""
+        image:
+          ""
 
       };
 
@@ -319,10 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    if (
-      modalImage &&
-      data.image
-    ) {
+    if (modalImage && data.image) {
 
       modalImage.style.backgroundImage =
         `url("${data.image}")`;
@@ -348,6 +348,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* =========================================================
+     CLOSE PROPERTY
+  ========================================================= */
+
   function closeProperty() {
 
     if (!propertyModal) {
@@ -368,16 +372,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* =========================================================
+     PROPERTY CARD EVENTS
+  ========================================================= */
+
   cards.forEach(card => {
 
     card.style.cursor = "pointer";
 
-    card.addEventListener(
-      "click",
-      () => {
-        openProperty(card);
+    card.addEventListener("click", (event) => {
+
+      /*
+       * If user clicks AI Explore button,
+       * do NOT open property modal.
+       */
+
+      if (
+        event.target.closest(
+          ".ai-explore-button"
+        )
+      ) {
+        return;
       }
-    );
+
+      openProperty(card);
+
+    });
 
   });
 
@@ -415,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (modalMessage) {
 
           modalMessage.textContent =
-            "Availability checking will be connected to the property partner in the next stage.";
+            "Availability checking will be connected directly with the property partner in the next stage.";
 
         }
 
@@ -464,7 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     lockBody();
-
 
     setTimeout(() => {
 
@@ -558,18 +577,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const name =
           document
             .querySelector("#partnerName")
-            ?.value
-            .trim();
+            ?.value.trim();
 
         const property =
           document
             .querySelector("#propertyName")
-            ?.value
-            .trim();
+            ?.value.trim();
 
 
         if (!name || !property) {
+
+          if (partnerMessage) {
+
+            partnerMessage.textContent =
+              "Please enter your name and property name.";
+
+            partnerMessage.style.color =
+              "#9b3d32";
+
+          }
+
           return;
+
         }
 
 
@@ -593,15 +622,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
-     HIMVOYA AI DESTINATION DATA
+     DESTINATION DATABASE
   ========================================================= */
 
   const destinations = {
 
     chamba: {
 
-      name:
-        "Chamba",
+      name: "Chamba",
 
       subtitle:
         "Ancient temples, quiet valleys & authentic mountain life.",
@@ -610,7 +638,23 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1800&q=85",
 
       guide:
-        "Namaste! I'm your HimVoya mountain guide for Chamba. I can help you discover places, food, experiences and build a trip around your travel style.",
+        "Namaste! I'm your HimVoya AI mountain guide for Chamba. I can help you discover places, local food, hidden experiences and build a trip around your travel style.",
+
+      answers: {
+
+        "best places":
+          "For a first Chamba trip, explore the historic Chamba town, Lakshmi Narayan Temple, Chaugan, nearby viewpoints and Khajjiar.",
+
+        "local food":
+          "Try traditional Himachali food such as dham-style meals, rajma, madra and local snacks. Ask your host for an authentic home-cooked experience.",
+
+        "hidden places":
+          "For a quieter experience, explore village trails, lesser-known viewpoints and forest routes away from the main tourist areas.",
+
+        "best time":
+          "Spring and autumn are excellent for comfortable weather and mountain views. Summer is pleasant in higher areas, while winter brings a different snowy Himalayan atmosphere."
+
+      },
 
       itinerary: {
 
@@ -633,8 +677,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     manali: {
 
-      name:
-        "Manali",
+      name: "Manali",
 
       subtitle:
         "Mountain adventures, cafés, forests & high-altitude escapes.",
@@ -644,6 +687,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       guide:
         "Welcome to Manali. Tell me whether you want adventure, relaxation, nature, food or a mix — I'll shape the journey around you.",
+
+      answers: {
+
+        "best places":
+          "Explore Old Manali, Hadimba Temple, Manu Temple, Solang Valley, Vashisht and the Beas riverside.",
+
+        "local food":
+          "Try Himachali dishes, local cafés, trout where available, siddu and traditional mountain meals.",
+
+        "hidden places":
+          "For a quieter side of Manali, explore village walks, forest trails and less crowded areas around Old Manali and nearby villages.",
+
+        "best time":
+          "March to June is popular for pleasant weather. September to November is excellent for clearer mountain landscapes and quieter travel."
+
+      },
 
       itinerary: {
 
@@ -666,8 +725,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spiti: {
 
-      name:
-        "Spiti Valley",
+      name: "Spiti Valley",
 
       subtitle:
         "High-altitude landscapes, monasteries & raw Himalayan wilderness.",
@@ -677,6 +735,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       guide:
         "Welcome to Spiti. This is a slower, more remote journey. I can help you balance monasteries, landscapes, villages and acclimatization.",
+
+      answers: {
+
+        "best places":
+          "Key Monastery, Kibber, Langza, Hikkim, Komik and the Kaza region are some of the highlights.",
+
+        "local food":
+          "Try simple local mountain food, thukpa, momos and traditional dishes available in local homestays.",
+
+        "hidden places":
+          "Explore smaller villages, monastery surroundings and quiet viewpoints rather than rushing between major tourist stops.",
+
+        "best time":
+          "The main road-access season is generally during the warmer months. Always check current road and weather conditions before travelling because high-altitude conditions can change quickly."
+
+      },
 
       itinerary: {
 
@@ -700,7 +774,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
-     CREATE AI DESTINATION EXPERIENCE
+     DESTINATION DETECTION
+  ========================================================= */
+
+  function detectDestination(text) {
+
+    const value =
+      (text || "").toLowerCase();
+
+    if (
+      value.includes("manali")
+    ) {
+      return "manali";
+    }
+
+    if (
+      value.includes("spiti")
+    ) {
+      return "spiti";
+    }
+
+    if (
+      value.includes("chamba")
+    ) {
+      return "chamba";
+    }
+
+    return "chamba";
+
+  }
+
+
+  /* =========================================================
+     CREATE DESTINATION EXPERIENCE
   ========================================================= */
 
   function createDestinationExperience() {
@@ -730,7 +836,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button
           class="destination-close"
           type="button"
-          aria-label="Close destination experience"
+          aria-label="Close"
         >
           ×
         </button>
@@ -754,7 +860,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </h2>
 
             <p id="destinationSubtitle">
-              Discover the mountains differently.
+              Discover the Himalayas differently.
             </p>
 
           </div>
@@ -778,7 +884,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </small>
 
               <p id="guideMessage">
-                Namaste! I'm your HimVoya mountain guide.
+                Namaste! I'm your HimVoya AI mountain guide.
               </p>
 
             </div>
@@ -940,7 +1046,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================================
-       DESTINATION ELEMENTS
+       DESTINATION MODAL ELEMENTS
     ========================================================= */
 
     const closeButton =
@@ -953,42 +1059,42 @@ document.addEventListener("DOMContentLoaded", () => {
         ".destination-backdrop"
       );
 
-    const destinationHero =
-      modal.querySelector(
-        "#destinationHero"
-      );
-
-    const destinationTitle =
+    const title =
       modal.querySelector(
         "#destinationTitle"
       );
 
-    const destinationSubtitle =
+    const subtitle =
       modal.querySelector(
         "#destinationSubtitle"
       );
 
-    const guideMessage =
+    const guide =
       modal.querySelector(
         "#guideMessage"
       );
 
-    const aiResponse =
+    const hero =
+      modal.querySelector(
+        "#destinationHero"
+      );
+
+    const response =
       modal.querySelector(
         "#aiResponse"
       );
 
-    const aiQuestion =
+    const questionInput =
       modal.querySelector(
         "#aiQuestion"
       );
 
-    const askAI =
+    const askButton =
       modal.querySelector(
         "#askAI"
       );
 
-    const itineraryResult =
+    const itinerary =
       modal.querySelector(
         "#itineraryResult"
       );
@@ -998,10 +1104,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "#buildTrip"
       );
 
-
-    /* =========================================================
-       CURRENT DESTINATION
-    ========================================================= */
 
     let currentDestination =
       destinations.chamba;
@@ -1014,80 +1116,57 @@ document.addEventListener("DOMContentLoaded", () => {
     ========================================================= */
 
     function setDestination(
-      destination
-    ) {
-
-      currentDestination =
-        destination;
-
-
-      destinationTitle.textContent =
-        destination.name;
-
-
-      destinationSubtitle.textContent =
-        destination.subtitle;
-
-
-      guideMessage.textContent =
-        destination.guide;
-
-
-      destinationHero.style.backgroundImage =
-        `url("${destination.image}")`;
-
-
-      aiResponse.textContent =
-        "Ask me anything about this destination.";
-
-
-      itineraryResult.textContent =
-        "Choose a duration to create your journey.";
-
-    }
-
-
-    /* =========================================================
-       OPEN DESTINATION
-    ========================================================= */
-
-    function openDestination(
       destinationKey
     ) {
 
       const destination =
         destinations[destinationKey];
 
-
       if (!destination) {
-
-        console.warn(
-          "HimVoya destination not found:",
-          destinationKey
-        );
-
         return;
+      }
+
+      currentDestination =
+        destination;
+
+
+      if (title) {
+        title.textContent =
+          destination.name;
+      }
+
+      if (subtitle) {
+        subtitle.textContent =
+          destination.subtitle;
+      }
+
+      if (guide) {
+        guide.textContent =
+          destination.guide;
+      }
+
+      if (hero) {
+
+        hero.style.backgroundImage =
+          `url("${destination.image}")`;
 
       }
 
+      if (response) {
 
-      setDestination(
-        destination
-      );
+        response.textContent =
+          "Ask me anything about this destination.";
 
+      }
 
-      modal.classList.add(
-        "active"
-      );
+      if (itinerary) {
 
+        itinerary.textContent =
+          "Choose a duration to create your journey.";
 
-      modal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
+      }
 
-
-      lockBody();
+      selectedDays = 3;
 
     }
 
@@ -1102,45 +1181,49 @@ document.addEventListener("DOMContentLoaded", () => {
         "active"
       );
 
-
-      modal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-
       unlockBody();
 
     }
 
 
-    closeButton.addEventListener(
-      "click",
-      closeDestination
-    );
+    if (closeButton) {
+
+      closeButton.addEventListener(
+        "click",
+        closeDestination
+      );
+
+    }
 
 
-    backdrop.addEventListener(
-      "click",
-      closeDestination
-    );
+    if (backdrop) {
+
+      backdrop.addEventListener(
+        "click",
+        closeDestination
+      );
+
+    }
 
 
     /* =========================================================
-       AI GUIDE ANSWERS
+       ANSWER AI QUESTION
     ========================================================= */
 
-    function answerQuestion(
-      question
-    ) {
+    function answerQuestion(question) {
 
       const q =
-        question
+        (question || "")
           .toLowerCase()
           .trim();
 
 
-      let response = "";
+      let answer =
+        "I can help you with places, food, hidden experiences, weather, timing and itinerary planning.";
+
+
+      const answers =
+        currentDestination.answers;
 
 
       if (
@@ -1149,21 +1232,23 @@ document.addEventListener("DOMContentLoaded", () => {
         q.includes("restaurant")
       ) {
 
-        response =
-          `${currentDestination.name} is best explored through local food. Try traditional Himachali dishes, local cafés and small family-run places rather than only tourist restaurants.`;
+        answer =
+          answers["local food"];
 
       }
+
 
       else if (
         q.includes("hidden") ||
         q.includes("secret") ||
-        q.includes("quiet")
+        q.includes("offbeat")
       ) {
 
-        response =
-          `For a quieter side of ${currentDestination.name}, explore nearby villages, forest trails, local viewpoints and less-commercial mountain routes. I can help you create a slow-travel route.`;
+        answer =
+          answers["hidden places"];
 
       }
+
 
       else if (
         q.includes("best time") ||
@@ -1171,71 +1256,49 @@ document.addEventListener("DOMContentLoaded", () => {
         q.includes("season")
       ) {
 
-        response =
-          `The best time depends on your experience. Spring and autumn are great for pleasant weather and landscapes, while summer is useful for higher-altitude escapes. Winter can offer snow experiences where conditions allow.`;
+        answer =
+          answers["best time"];
 
       }
 
+
       else if (
-        q.includes("best places") ||
-        q.includes("places") ||
+        q.includes("place") ||
         q.includes("visit") ||
-        q.includes("see")
+        q.includes("see") ||
+        q.includes("where")
       ) {
 
-        response =
-          `For ${currentDestination.name}, I recommend combining the main attractions with one local village, one nature experience and one relaxed viewpoint. That gives you a more authentic HimVoya-style journey.`;
+        answer =
+          answers["best places"];
 
       }
+
 
       else if (
-        q.includes("adventure") ||
-        q.includes("trek") ||
-        q.includes("hike")
+        q.includes("hello") ||
+        q.includes("hi") ||
+        q.includes("namaste")
       ) {
 
-        response =
-          `${currentDestination.name} can be experienced through nature walks, mountain viewpoints and suitable local trails. Tell me your fitness level and available days and I can shape the experience around you.`;
-
-      }
-
-      else if (
-        q.includes("family") ||
-        q.includes("kids")
-      ) {
-
-        response =
-          `For a family trip to ${currentDestination.name}, I'd prioritize comfortable stays, shorter drives, scenic viewpoints, local food and easy nature experiences rather than an overly packed itinerary.`;
-
-      }
-
-      else if (
-        q.includes("couple") ||
-        q.includes("romantic") ||
-        q.includes("honeymoon")
-      ) {
-
-        response =
-          `For couples visiting ${currentDestination.name}, I'd combine a scenic stay, sunset viewpoint, slow local meals, a private nature experience and enough free time to enjoy the mountains without rushing.`;
-
-      }
-
-      else {
-
-        response =
-          `I'd suggest exploring ${currentDestination.name} through three layers: iconic places, local experiences and hidden nature spots. Tell me whether you prefer adventure, relaxation, food, culture or nature and I'll personalize it.`;
+        answer =
+          currentDestination.guide;
 
       }
 
 
-      aiResponse.textContent =
-        response;
+      if (response) {
+
+        response.textContent =
+          answer;
+
+      }
 
     }
 
 
     /* =========================================================
-       QUESTION BUTTONS
+       QUICK QUESTIONS
     ========================================================= */
 
     modal
@@ -1248,8 +1311,11 @@ document.addEventListener("DOMContentLoaded", () => {
           "click",
           () => {
 
+            const question =
+              button.dataset.question;
+
             answerQuestion(
-              button.dataset.question
+              question
             );
 
           }
@@ -1259,61 +1325,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================================
-       ASK AI
+       ASK BUTTON
     ========================================================= */
 
-    function askQuestion() {
+    if (askButton) {
 
-      const question =
-        aiQuestion.value.trim();
+      askButton.addEventListener(
+        "click",
+        () => {
 
+          const question =
+            questionInput?.value.trim();
 
-      if (!question) {
+          if (!question) {
 
-        aiResponse.textContent =
-          "Ask me something about this destination first.";
+            if (response) {
 
-        return;
+              response.textContent =
+                "Ask me something first — for example, 'What are the best places to visit?'";
 
-      }
+            }
 
+            return;
 
-      answerQuestion(
-        question
+          }
+
+          answerQuestion(
+            question
+          );
+
+          if (questionInput) {
+            questionInput.value = "";
+          }
+
+        }
       );
-
-
-      aiQuestion.value = "";
 
     }
 
 
-    askAI.addEventListener(
-      "click",
-      askQuestion
-    );
+    /* =========================================================
+       ENTER TO ASK
+    ========================================================= */
 
+    if (questionInput) {
 
-    aiQuestion.addEventListener(
-      "keydown",
-      event => {
+      questionInput.addEventListener(
+        "keydown",
+        (event) => {
 
-        if (
-          event.key === "Enter"
-        ) {
+          if (
+            event.key === "Enter"
+          ) {
 
-          event.preventDefault();
+            event.preventDefault();
 
-          askQuestion();
+            askButton?.click();
+
+          }
 
         }
+      );
 
-      }
-    );
+    }
 
 
     /* =========================================================
-       ITINERARY BUTTONS
+       DURATION BUTTONS
     ========================================================= */
 
     modal
@@ -1331,17 +1409,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.dataset.days
               );
 
-
-            const itinerary =
+            const plan =
               currentDestination
                 .itinerary[
                   selectedDays
                 ];
 
 
-            itineraryResult.textContent =
-              itinerary ||
-              "I'll create a personalized journey for you.";
+            if (itinerary) {
+
+              itinerary.textContent =
+                plan ||
+                "I can create a personalized itinerary for this duration.";
+
+            }
 
           }
         );
@@ -1353,205 +1434,272 @@ document.addEventListener("DOMContentLoaded", () => {
        BUILD MY TRIP
     ========================================================= */
 
-    buildTrip.addEventListener(
-      "click",
-      () => {
+    if (buildTrip) {
 
-        const itinerary =
-          currentDestination
-            .itinerary[
-              selectedDays
-            ];
+      buildTrip.addEventListener(
+        "click",
+        () => {
 
-
-        itineraryResult.textContent =
-          itinerary ||
-          "Your personalized HimVoya journey is being prepared.";
-
-      }
-    );
+          const plan =
+            currentDestination
+              .itinerary[
+                selectedDays
+              ];
 
 
-    /* =========================================================
-       DESTINATION CLICK DETECTION
-    ========================================================= */
+          if (itinerary) {
 
-    function bindDestinationElements() {
-
-      document
-        .querySelectorAll(
-          "[data-destination]"
-        )
-        .forEach(element => {
-
-          if (
-            element.dataset.aiBound === "true"
-          ) {
-            return;
-          }
-
-
-          const rawKey =
-            element.dataset.destination
-              .toLowerCase()
-              .trim();
-
-
-          let key =
-            rawKey;
-
-
-          if (
-            rawKey.includes("chamba")
-          ) {
-            key = "chamba";
-          }
-
-          else if (
-            rawKey.includes("manali")
-          ) {
-            key = "manali";
-          }
-
-          else if (
-            rawKey.includes("spiti")
-          ) {
-            key = "spiti";
-          }
-
-
-          if (
-            !destinations[key]
-          ) {
-            return;
-          }
-
-
-          element.dataset.aiBound =
-            "true";
-
-
-          element.style.cursor =
-            "pointer";
-
-
-          element.addEventListener(
-            "click",
-            event => {
-
-              event.preventDefault();
-
-              openDestination(
-                key
-              );
-
-            }
-          );
-
-        });
-
-
-      /* ---------------------------------------------------------
-         ALSO DETECT COMMON DESTINATION CARDS
-      --------------------------------------------------------- */
-
-      document
-        .querySelectorAll(
-          ".destination-card, .destination, .destination-item"
-        )
-        .forEach(element => {
-
-          if (
-            element.dataset.aiBound === "true"
-          ) {
-            return;
-          }
-
-
-          const text =
-            element.textContent
-              .toLowerCase();
-
-
-          let key = null;
-
-
-          if (
-            text.includes("chamba")
-          ) {
-
-            key = "chamba";
-
-          }
-
-          else if (
-            text.includes("manali")
-          ) {
-
-            key = "manali";
-
-          }
-
-          else if (
-            text.includes("spiti")
-          ) {
-
-            key = "spiti";
+            itinerary.textContent =
+              plan ||
+              `Your ${selectedDays}-day ${currentDestination.name} journey is ready.`;
 
           }
 
 
-          if (!key) {
-            return;
+          if (response) {
+
+            response.textContent =
+              `Perfect. I've started building your ${selectedDays}-day ${currentDestination.name} journey. Next, HimVoya can connect stays, experiences and local partners to this plan.`;
+
           }
 
-
-          element.dataset.aiBound =
-            "true";
-
-
-          element.style.cursor =
-            "pointer";
-
-
-          element.addEventListener(
-            "click",
-            event => {
-
-              event.preventDefault();
-
-              openDestination(
-                key
-              );
-
-            }
-          );
-
-        });
+        }
+      );
 
     }
 
 
-    bindDestinationElements();
-
-
     /* =========================================================
-       GLOBAL FUNCTION
-       Can also be called from HTML:
-       onclick="openHimVoyaDestination('chamba')"
+       GLOBAL OPEN FUNCTION
     ========================================================= */
 
     window.openHimVoyaDestination =
-      openDestination;
+      function(destinationKey) {
+
+        const key =
+          destinationKey || "chamba";
+
+        setDestination(key);
+
+        modal.classList.add(
+          "active"
+        );
+
+        lockBody();
+
+      };
+
+
+    /* =========================================================
+       INITIAL DESTINATION
+    ========================================================= */
+
+    setDestination("chamba");
 
   }
 
 
   /* =========================================================
-     CREATE AI EXPERIENCE IMMEDIATELY
+     CREATE AI EXPERIENCE
   ========================================================= */
 
   createDestinationExperience();
+
+
+  /* =========================================================
+     ADD AI EXPLORE BUTTONS TO CARDS
+  ========================================================= */
+
+  cards.forEach(card => {
+
+    if (
+      card.querySelector(
+        ".ai-explore-button"
+      )
+    ) {
+      return;
+    }
+
+
+    const place =
+      (card.dataset.place || "")
+        .toLowerCase();
+
+
+    let destination =
+      "chamba";
+
+
+    if (
+      place.includes("manali")
+    ) {
+
+      destination =
+        "manali";
+
+    }
+
+
+    else if (
+      place.includes("spiti")
+    ) {
+
+      destination =
+        "spiti";
+
+    }
+
+
+    else if (
+      place.includes("chamba")
+    ) {
+
+      destination =
+        "chamba";
+
+    }
+
+
+    else {
+
+      destination =
+        "chamba";
+
+    }
+
+
+    const body =
+      card.querySelector(".body");
+
+
+    if (!body) {
+      return;
+    }
+
+
+    const button =
+      document.createElement("button");
+
+
+    button.type =
+      "button";
+
+    button.className =
+      "ai-explore-button";
+
+    button.textContent =
+      "✨ Explore with AI";
+
+
+    button.style.cssText = `
+      width: 100%;
+      margin-top: 16px;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 11px;
+      background: #1d392a;
+      color: white;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    `;
+
+
+    button.addEventListener(
+      "mouseenter",
+      () => {
+
+        button.style.background =
+          "#254936";
+
+        button.style.transform =
+          "translateY(-2px)";
+
+      }
+    );
+
+
+    button.addEventListener(
+      "mouseleave",
+      () => {
+
+        button.style.background =
+          "#1d392a";
+
+        button.style.transform =
+          "translateY(0)";
+
+      }
+    );
+
+
+    button.addEventListener(
+      "click",
+      (event) => {
+
+        event.stopPropagation();
+
+        if (
+          window.openHimVoyaDestination
+        ) {
+
+          window.openHimVoyaDestination(
+            destination
+          );
+
+        }
+
+      }
+    );
+
+
+    body.appendChild(button);
+
+  });
+
+
+  /* =========================================================
+     HERO SEARCH → AI DESTINATION EXPERIENCE
+  ========================================================= */
+
+  if (form && where) {
+
+    const originalSubmit =
+      form.onsubmit;
+
+
+    form.addEventListener(
+      "dblclick",
+      () => {
+
+        const text =
+          where.value.trim();
+
+        if (!text) {
+          return;
+        }
+
+
+        const destination =
+          detectDestination(text);
+
+
+        if (
+          window.openHimVoyaDestination
+        ) {
+
+          window.openHimVoyaDestination(
+            destination
+          );
+
+        }
+
+      }
+    );
+
+  }
 
 
   /* =========================================================
@@ -1560,7 +1708,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener(
     "keydown",
-    event => {
+    (event) => {
 
       if (
         event.key !== "Escape"
@@ -1570,9 +1718,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       if (
-        propertyModal?.classList.contains(
-          "active"
-        )
+        propertyModal?.classList
+          .contains("active")
       ) {
 
         closeProperty();
@@ -1581,9 +1728,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       if (
-        partnerModal?.classList.contains(
-          "active"
-        )
+        partnerModal?.classList
+          .contains("active")
       ) {
 
         closePartner();
@@ -1598,18 +1744,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       if (
-        destinationModal?.classList.contains(
-          "active"
-        )
+        destinationModal?.classList
+          .contains("active")
       ) {
 
         destinationModal.classList.remove(
           "active"
-        );
-
-        destinationModal.setAttribute(
-          "aria-hidden",
-          "true"
         );
 
         unlockBody();
@@ -1619,4 +1759,312 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   );
 
+
 });
+/* =========================================================
+   HIMVOYA AI DESTINATION EXPERIENCE
+========================================================= */
+
+#destinationExperience {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: .25s ease;
+}
+
+#destinationExperience.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.destination-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 15, 10, .78);
+  backdrop-filter: blur(10px);
+}
+
+.destination-dialog {
+  position: relative;
+  z-index: 2;
+  width: min(1100px, 100%);
+  max-height: 94vh;
+  overflow-y: auto;
+  background: #f8f7f1;
+  color: #18251e;
+  border-radius: 26px;
+  box-shadow: 0 35px 100px rgba(0,0,0,.35);
+  transform: translateY(20px) scale(.97);
+  transition: .3s ease;
+}
+
+#destinationExperience.active .destination-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.destination-close {
+  position: absolute;
+  z-index: 5;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 50%;
+  background: rgba(0,0,0,.35);
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.destination-hero {
+  position: relative;
+  height: 360px;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border-radius: 26px 26px 0 0;
+}
+
+.destination-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(5,15,10,.82),
+    rgba(5,15,10,.25)
+  );
+  border-radius: inherit;
+}
+
+.destination-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 120px 55px 40px;
+}
+
+.destination-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 7vw, 76px);
+  line-height: .95;
+  margin: 0 0 15px;
+  letter-spacing: -2px;
+}
+
+.destination-hero-content > p:last-child {
+  max-width: 600px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #e5ece7;
+}
+
+.destination-content {
+  padding: 38px 45px 48px;
+}
+
+.ai-guide {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px;
+  background: #eaf1eb;
+  border: 1px solid #dce6de;
+  border-radius: 18px;
+  margin-bottom: 35px;
+}
+
+.ai-guide-icon {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #1d392a;
+  color: white;
+  font-weight: 700;
+}
+
+.ai-guide small {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #557060;
+}
+
+.ai-guide p {
+  margin: 6px 0 0;
+  line-height: 1.6;
+  color: #526059;
+}
+
+.destination-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 30px;
+}
+
+.destination-grid section {
+  background: white;
+  border: 1px solid #e5e2d9;
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.destination-grid h3 {
+  font-size: 25px;
+  margin: 0 0 20px;
+}
+
+.question-buttons,
+.duration-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.question-buttons button,
+.duration-buttons button {
+  padding: 13px;
+  border: 1px solid #d8ded9;
+  border-radius: 11px;
+  background: #f8faf8;
+  color: #26382e;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.question-buttons button:hover,
+.duration-buttons button:hover {
+  background: #eaf1eb;
+  border-color: #aebeb2;
+}
+
+.ai-chat {
+  margin-top: 20px;
+  border-top: 1px solid #e5e3dc;
+  padding-top: 20px;
+}
+
+.ai-response {
+  min-height: 100px;
+  padding: 16px;
+  border-radius: 13px;
+  background: #f4f6f2;
+  color: #526059;
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.ai-input {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ai-input input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  border: 1px solid #d8ded9;
+  border-radius: 11px;
+  padding: 0 14px;
+  outline: none;
+  font: inherit;
+}
+
+.ai-input input:focus {
+  border-color: #426650;
+}
+
+.ai-input button,
+.build-trip {
+  border: 0;
+  border-radius: 11px;
+  background: #1d392a;
+  color: white;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.itinerary-result {
+  margin-top: 18px;
+  padding: 18px;
+  min-height: 170px;
+  white-space: pre-line;
+  background: #f4f6f2;
+  border-radius: 13px;
+  color: #526059;
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.build-trip {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 15px;
+}
+
+@media (max-width: 700px) {
+
+  #destinationExperience {
+    padding: 10px;
+    align-items: flex-end;
+  }
+
+  .destination-dialog {
+    max-height: 95vh;
+    border-radius: 22px 22px 14px 14px;
+  }
+
+  .destination-hero {
+    height: 300px;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .destination-hero-content {
+    padding: 100px 25px 30px;
+  }
+
+  .destination-hero h2 {
+    font-size: 48px;
+  }
+
+  .destination-content {
+    padding: 22px 15px 25px;
+  }
+
+  .destination-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-grid section {
+    padding: 20px;
+  }
+
+  .question-buttons,
+  .duration-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-input {
+    flex-direction: column;
+  }
+
+  .ai-input button {
+    min-height: 48px;
+  }
+
+}
