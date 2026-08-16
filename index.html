@@ -7,7 +7,7 @@
 
   <meta
     name="description"
-    content="HimVoya — explore Himalayan stays, experiences and journeys."
+    content="HimVoya — explore Himalayan destinations, stays, experiences and AI-powered journeys."
   >
 
   <title>HimVoya — Explore the Himalayas Differently</title>
@@ -71,7 +71,10 @@
       <form class="search" id="search">
 
         <div>
-          <label for="where">WHERE</label>
+
+          <label for="where">
+            WHERE
+          </label>
 
           <input
             id="where"
@@ -79,6 +82,7 @@
             placeholder="Try Chamba, Himachal..."
             autocomplete="off"
           >
+
         </div>
 
 
@@ -127,6 +131,172 @@
 
 
   <!-- =========================
+       DESTINATION DISCOVERY
+  ========================== -->
+
+  <section class="section destination-section" id="destinations">
+
+    <div class="head">
+
+      <div>
+
+        <p class="eyebrow dark">
+          DISCOVER WITH HIMVOYA
+        </p>
+
+        <h2>
+          Explore a destination<br>
+          <em>before you go.</em>
+        </h2>
+
+      </div>
+
+      <p>
+        Don't just search for a hotel. Discover the places,
+        people, food and experiences that make a Himalayan
+        destination worth travelling for.
+      </p>
+
+    </div>
+
+
+    <div class="destination-cards">
+
+
+      <!-- CHAMBA -->
+
+      <article
+        class="destination-card"
+        data-destination="chamba"
+      >
+
+        <div class="destination-photo destination-chamba">
+
+          <span>
+            HIMACHAL PRADESH
+          </span>
+
+        </div>
+
+        <div class="destination-body">
+
+          <small>
+            HIDDEN HIMALAYAN GEM
+          </small>
+
+          <h3>
+            Chamba
+          </h3>
+
+          <p>
+            Ancient temples, quiet valleys, local culture
+            and untouched mountain landscapes.
+          </p>
+
+          <button
+            class="destination-explore-btn"
+            data-destination="chamba"
+            type="button"
+          >
+            Explore Chamba →
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- MANALI -->
+
+      <article
+        class="destination-card"
+        data-destination="manali"
+      >
+
+        <div class="destination-photo destination-manali">
+
+          <span>
+            MOUNTAIN ESCAPE
+          </span>
+
+        </div>
+
+        <div class="destination-body">
+
+          <small>
+            ADVENTURE & NATURE
+          </small>
+
+          <h3>
+            Manali
+          </h3>
+
+          <p>
+            Mountain adventures, cafés, villages, rivers
+            and unforgettable Himalayan views.
+          </p>
+
+          <button
+            class="destination-explore-btn"
+            data-destination="manali"
+            type="button"
+          >
+            Explore Manali →
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- SPITI -->
+
+      <article
+        class="destination-card"
+        data-destination="spiti"
+      >
+
+        <div class="destination-photo destination-spiti">
+
+          <span>
+            HIGH HIMALAYAS
+          </span>
+
+        </div>
+
+        <div class="destination-body">
+
+          <small>
+            RAW & REMOTE
+          </small>
+
+          <h3>
+            Spiti Valley
+          </h3>
+
+          <p>
+            Monasteries, high-altitude villages, dramatic
+            landscapes and slow mountain journeys.
+          </p>
+
+          <button
+            class="destination-explore-btn"
+            data-destination="spiti"
+            type="button"
+          >
+            Explore Spiti →
+          </button>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
        STAYS
   ========================== -->
 
@@ -156,8 +326,6 @@
     </div>
 
 
-    <!-- PROPERTY CARDS -->
-
     <div class="cards" id="cards">
 
 
@@ -170,7 +338,11 @@
       >
 
         <div class="photo p1">
-          <span>VALLEY VIEW</span>
+
+          <span>
+            VALLEY VIEW
+          </span>
+
         </div>
 
         <div class="body">
@@ -213,7 +385,11 @@
       >
 
         <div class="photo p2">
-          <span>BOUTIQUE</span>
+
+          <span>
+            BOUTIQUE
+          </span>
+
         </div>
 
         <div class="body">
@@ -256,7 +432,11 @@
       >
 
         <div class="photo p3">
-          <span>TRAVELLER FAVOURITE</span>
+
+          <span>
+            TRAVELLER FAVOURITE
+          </span>
+
         </div>
 
         <div class="body">
@@ -357,7 +537,8 @@
         </h3>
 
         <p>
-          Find stays and hidden experiences worth travelling for.
+          Find destinations, stays and hidden experiences
+          worth travelling for.
         </p>
 
       </div>
@@ -372,7 +553,8 @@
         </h3>
 
         <p>
-          Create a trip that fits your time, budget and travel style.
+          Let HimVoya help build a trip around your time,
+          budget and travel style.
         </p>
 
       </div>
@@ -456,326 +638,529 @@
   </footer>
 
 
-  <!-- =========================
-       PROPERTY DETAIL MODAL
-  ========================== -->
+  <!-- =====================================================
+       DESTINATION EXPERIENCE
+  ====================================================== -->
 
   <div
-    class="property-modal"
-    id="propertyModal"
+    class="destination-experience"
+    id="destinationExperience"
     aria-hidden="true"
   >
 
     <div
-      class="modal-backdrop"
-      id="modalBackdrop"
+      class="destination-experience-backdrop"
+      id="destinationExperienceBackdrop"
     ></div>
 
 
     <div
-      class="property-dialog"
+      class="destination-experience-panel"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="modalTitle"
+      aria-labelledby="destinationTitle"
     >
 
+
+      <!-- CLOSE -->
+
       <button
-        class="modal-close"
-        id="modalClose"
-        aria-label="Close property details"
+        class="destination-close"
+        id="destinationClose"
         type="button"
+        aria-label="Close destination experience"
       >
         ×
       </button>
 
 
+      <!-- =========================
+           DESTINATION HERO
+      ========================== -->
+
       <div
-        class="modal-image"
-        id="modalImage"
-      ></div>
+        class="destination-hero"
+        id="destinationHero"
+      >
 
+        <div class="destination-hero-overlay"></div>
 
-      <div class="modal-content">
+        <div class="destination-hero-content">
 
-        <p
-          class="eyebrow dark"
-          id="modalCategory"
-        >
-          MOUNTAIN STAY
-        </p>
+          <p class="eyebrow">
+            HIMVOYA DESTINATION EXPERIENCE
+          </p>
 
+          <h2 id="destinationTitle">
+            Chamba
+          </h2>
 
-        <h2 id="modalTitle">
-          Property Name
-        </h2>
+          <p id="destinationSubtitle">
+            Discover the soul of the Himalayas.
+          </p>
 
+          <div class="destination-actions">
 
-        <p
-          class="modal-location"
-          id="modalLocation"
-        >
-          Himachal Pradesh
-        </p>
+            <button
+              class="destination-primary"
+              id="askAIButton"
+              type="button"
+            >
+              ✦ Ask HimVoya AI
+            </button>
 
-
-        <p
-          class="modal-description"
-          id="modalDescription"
-        ></p>
-
-
-        <div class="modal-info">
-
-          <div>
-
-            <span>
-              PRICE
-            </span>
-
-            <strong id="modalPrice"></strong>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              EXPERIENCE
-            </span>
-
-            <strong>
-              Himalayan Stay
-            </strong>
+            <button
+              class="destination-secondary"
+              id="buildTripButton"
+              type="button"
+            >
+              Build My Trip →
+            </button>
 
           </div>
 
         </div>
-
-
-        <h3>
-          What you can expect
-        </h3>
-
-
-        <div class="amenities">
-
-          <span>
-            Mountain views
-          </span>
-
-          <span>
-            Local hospitality
-          </span>
-
-          <span>
-            Nature & hikes
-          </span>
-
-          <span>
-            Stargazing
-          </span>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-          <button
-            class="primary-action"
-            id="availabilityBtn"
-            type="button"
-          >
-            Check Availability →
-          </button>
-
-
-          <button
-            class="secondary-action"
-            id="enquiryBtn"
-            type="button"
-          >
-            Send Enquiry
-          </button>
-
-        </div>
-
-
-        <p
-          class="modal-note"
-          id="modalMessage"
-          aria-live="polite"
-        ></p>
 
       </div>
 
-    </div>
 
-  </div>
+      <!-- =========================
+           AI GUIDE
+      ========================== -->
+
+      <section class="ai-guide-section">
+
+        <div class="ai-guide-intro">
+
+          <div>
+
+            <p class="eyebrow dark">
+              YOUR AI MOUNTAIN GUIDE
+            </p>
+
+            <h3>
+              Ask HimVoya
+            </h3>
+
+            <p>
+              Tell us what kind of journey you want.
+              HimVoya AI will help you discover the destination.
+            </p>
+
+          </div>
+
+          <span class="ai-status">
+            ● AI GUIDE
+          </span>
+
+        </div>
 
 
-  <!-- =========================
-       PARTNER REGISTRATION MODAL
-  ========================== -->
+        <div
+          class="ai-chat"
+          id="aiChat"
+        >
 
-  <div
-    class="partner-modal"
-    id="partnerModal"
-    aria-hidden="true"
-  >
+          <div class="ai-message">
 
-    <div
-      class="partner-backdrop"
-      id="partnerBackdrop"
-    ></div>
+            <div class="ai-avatar">
+              H
+            </div>
+
+            <div>
+
+              <strong>
+                HimVoya AI
+              </strong>
+
+              <p>
+                Namaste 👋 I'm your HimVoya guide.
+                Ask me anything about this destination.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
 
 
-    <div
-      class="partner-dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="partnerTitle"
-    >
-
-      <button
-        class="partner-close"
-        id="partnerClose"
-        type="button"
-        aria-label="Close partner form"
-      >
-                ×
-      </button>
-
-      <div class="partner-content">
-
-        <p class="eyebrow dark">
-          JOIN HIMVOYA
-        </p>
-
-        <h2 id="partnerTitle">
-          List your place.
-        </h2>
-
-        <p>
-          Tell us about your property or Himalayan experience.
-          We'll review your details and connect with you.
-        </p>
-
-        <form id="partnerForm">
-
-          <label for="partnerName">
-            YOUR NAME
-          </label>
-
-          <input
-            id="partnerName"
-            type="text"
-            placeholder="Your full name"
-            required
-          >
-
-          <label for="propertyName">
-            PROPERTY / EXPERIENCE NAME
-          </label>
-
-          <input
-            id="propertyName"
-            type="text"
-            placeholder="e.g. Mountain View Retreat"
-            required
-          >
-
-          <label for="propertyLocation">
-            LOCATION
-          </label>
-
-          <input
-            id="propertyLocation"
-            type="text"
-            placeholder="e.g. Chamba, Himachal Pradesh"
-            required
-          >
-
-          <label for="propertyType">
-            WHAT ARE YOU LISTING?
-          </label>
-
-          <select id="propertyType" required>
-
-            <option value="">
-              Select one
-            </option>
-
-            <option value="stay">
-              Stay / Hotel / Homestay
-            </option>
-
-            <option value="experience">
-              Local Experience
-            </option>
-
-          </select>
-
-          <label for="propertyPrice">
-            STARTING PRICE
-          </label>
-
-          <input
-            id="propertyPrice"
-            type="number"
-            min="0"
-            placeholder="₹ per night / person"
-            required
-          >
-
-          <label for="partnerPhone">
-            PHONE / WHATSAPP
-          </label>
-
-          <input
-            id="partnerPhone"
-            type="tel"
-            placeholder="Your contact number"
-            required
-          >
-
-          <label for="propertyDescription">
-            TELL US ABOUT YOUR PLACE
-          </label>
-
-          <textarea
-            id="propertyDescription"
-            rows="5"
-            placeholder="Describe your property, views, rooms, experiences..."
-            required
-          ></textarea>
+        <div class="ai-suggestions">
 
           <button
-            class="primary-action"
-            type="submit"
+            type="button"
+            data-ai-question="What should I do here for 2 days?"
           >
-            Submit Listing →
+            🗓️ 2-day itinerary
           </button>
 
-          <p
-            id="partnerMessage"
-            class="modal-note"
-            aria-live="polite"
-          ></p>
+          <button
+            type="button"
+            data-ai-question="What are the hidden places here?"
+          >
+            📍 Hidden places
+          </button>
+
+          <button
+            type="button"
+            data-ai-question="What local food should I try?"
+          >
+            🍲 Local food
+          </button>
+
+          <button
+            type="button"
+            data-ai-question="What experiences are best for couples?"
+          >
+            ❤️ Couple trip
+          </button>
+
+        </div>
+
+
+        <form
+          class="ai-input"
+          id="aiForm"
+        >
+
+          <input
+            id="aiQuestion"
+            type="text"
+            placeholder="Ask anything about this destination..."
+            autocomplete="off"
+          >
+
+          <button
+            type="submit"
+            aria-label="Ask HimVoya AI"
+          >
+            →
+          </button>
 
         </form>
 
-      </div>
-
-    </div>
-
-  </div>
+      </section>
 
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
+      <!-- =========================
+           DESTINATION HIGHLIGHTS
+      ========================== -->
 
-  <script src="script.js"></script>
+      <section class="destination-content-section">
 
-</body>
-</html>
+        <div class="destination-section-heading">
+
+          <p class="eyebrow dark">
+            DON'T MISS
+          </p>
+
+          <h3>
+            Places worth experiencing.
+          </h3>
+
+        </div>
+
+
+        <div class="experience-grid">
+
+
+          <article class="experience-item">
+
+            <div class="experience-icon">
+              🏔️
+            </div>
+
+            <div>
+
+              <h4>
+                Mountain Views
+              </h4>
+
+              <p>
+                Discover viewpoints and peaceful valleys away
+                from crowded tourist spots.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="experience-item">
+
+            <div class="experience-icon">
+              🛕
+            </div>
+
+            <div>
+
+              <h4>
+                Local Culture
+              </h4>
+
+              <p>
+                Explore temples, villages and stories that
+                give the destination its character.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="experience-item">
+
+            <div class="experience-icon">
+              🌲
+            </div>
+
+            <div>
+
+              <h4>
+                Nature & Trails
+              </h4>
+
+              <p>
+                Find walks, forest trails and slow Himalayan
+                experiences.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="experience-item">
+
+            <div class="experience-icon">
+              🍲
+            </div>
+
+            <div>
+
+              <h4>
+                Local Flavours
+              </h4>
+
+              <p>
+                Taste regional food and discover authentic
+                local dining experiences.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           AI ITINERARY
+      ========================== -->
+
+      <section
+        class="ai-itinerary-section"
+        id="aiItinerary"
+      >
+
+        <div class="itinerary-heading">
+
+          <div>
+
+            <p class="eyebrow dark">
+              AI-POWERED TRIP PLANNER
+            </p>
+
+            <h3>
+              Your journey, planned around you.
+            </h3>
+
+          </div>
+
+          <span>
+            PERSONALIZED
+          </span>
+
+        </div>
+
+
+        <div class="trip-preferences">
+
+          <button
+            type="button"
+            class="trip-option active"
+            data-days="2"
+          >
+            2 Days
+          </button>
+
+          <button
+            type="button"
+            class="trip-option"
+            data-days="3"
+          >
+            3 Days
+          </button>
+
+          <button
+            type="button"
+            class="trip-option"
+            data-days="5"
+          >
+            5 Days
+          </button>
+
+          <button
+            type="button"
+            class="trip-option"
+            data-days="7"
+          >
+            7 Days
+          </button>
+
+        </div>
+
+
+        <div
+          class="itinerary-result"
+          id="itineraryResult"
+        >
+
+          <article class="day-card">
+
+            <span>
+              DAY 01
+            </span>
+
+            <h4>
+              Arrive & Discover
+            </h4>
+
+            <p>
+              Check into your stay, explore the local area,
+              enjoy a relaxed evening and experience local food.
+            </p>
+
+          </article>
+
+
+          <article class="day-card">
+
+            <span>
+              DAY 02
+            </span>
+
+            <h4>
+              Explore Beyond
+            </h4>
+
+            <p>
+              Visit a scenic viewpoint, discover a nearby village
+              and finish the day with a peaceful Himalayan sunset.
+            </p>
+
+          </article>
+
+        </div>
+
+
+        <button
+          class="generate-itinerary"
+          id="generateItinerary"
+          type="button"
+        >
+          ✦ Generate My Personalized Trip
+        </button>
+
+      </section>
+
+
+      <!-- =========================
+           RECOMMENDED STAYS
+      ========================== -->
+
+      <section class="destination-stays-section">
+
+        <div class="destination-section-heading">
+
+          <p class="eyebrow dark">
+            STAY HERE
+          </p>
+
+          <h3>
+            Places to make it your base.
+          </h3>
+
+        </div>
+
+
+        <div class="mini-stay-grid">
+
+
+          <article class="mini-stay">
+
+            <div class="mini-stay-image mini-stay-one"></div>
+
+            <div>
+
+              <small>
+                VALLEY VIEW
+              </small>
+
+              <h4>
+                Mountain View Retreat
+              </h4>
+
+              <p>
+                From ₹2,499
+              </p>
+
+              <button
+                type="button"
+                class="mini-stay-btn"
+              >
+                View Stay →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <article class="mini-stay">
+
+            <div class="mini-stay-image mini-stay-two"></div>
+
+            <div>
+
+              <small>
+                BOUTIQUE
+              </small>
+
+              <h4>
+                Forest Edge Boutique
+              </h4>
+
+              <p>
+                From ₹2,999
+              </p>
+
+              <button
+                type="button"
+                class="mini-stay-btn"
+              >
+                View Stay →
+              </button>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ========================
