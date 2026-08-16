@@ -50,9 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function lockBody() {
     document.body.classList.add("modal-open");
   }
-
-  function unlockBody() {
-    document.body.classList.remove("modal-open");
   /* =========================================================
      SEARCH + AI DESTINATION EXPERIENCE
   ========================================================= */
@@ -69,25 +66,26 @@ document.addEventListener("DOMContentLoaded", () => {
       const selectedType =
         kind.value;
 
-      /* -----------------------------------------
-         1. DESTINATION SEARCH → AI EXPERIENCE
-      ----------------------------------------- */
+      const destinationText =
+        searchText.toLowerCase();
 
-      if (searchText) {
+
+      /* =====================================================
+         AI DESTINATION SEARCH
+      ===================================================== */
+
+      if (
+        destinationText.includes("chamba") ||
+        destinationText.includes("manali") ||
+        destinationText.includes("spiti")
+      ) {
 
         const destinationKey =
-          detectDestination(searchText);
-
-        /*
-         * If the user searches a known destination,
-         * open the HimVoya AI Destination Experience
-         * directly instead of only filtering cards.
-         */
+          detectDestination(destinationText);
 
         if (
-          searchText.toLowerCase().includes("chamba") ||
-          searchText.toLowerCase().includes("manali") ||
-          searchText.toLowerCase().includes("spiti")
+          typeof window.openHimVoyaDestination ===
+          "function"
         ) {
 
           window.openHimVoyaDestination(
@@ -95,17 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
           return;
+
         }
 
       }
 
 
-      /* -----------------------------------------
-         2. NORMAL STAY FILTER
-      ----------------------------------------- */
-
-      const searchLower =
-        searchText.toLowerCase();
+      /* =====================================================
+         NORMAL STAY SEARCH
+      ===================================================== */
 
       let visibleCount = 0;
 
@@ -119,13 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
           card.dataset.type || "";
 
         const placeMatch =
-          !searchLower ||
-          place.includes(searchLower) ||
-          searchLower.includes(place) ||
-          (
-            searchLower.includes("himachal") &&
-            place.includes("himachal")
-          );
+          !destinationText ||
+          place.includes(destinationText) ||
+          destinationText.includes(place);
 
         const typeMatch =
           selectedType === "all" ||
@@ -144,9 +136,60 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
 
-      /* -----------------------------------------
-         3. EMPTY SEARCH
-      ----------------------------------------- */
+      if (
+        !destinationText &&
+        selectedType === "all"
+      ) {
+
+        if (result) {
+          result.textContent = "";
+        }
+
+        document
+          .querySelector("#stays")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+        return;
+
+      }
+
+
+      if (result) {
+
+        if (visibleCount > 0) {
+
+          result.textContent =
+            `${visibleCount} ${
+              visibleCount === 1
+                ? "place"
+                : "places"
+            } found.`;
+
+        } else {
+
+          result.textContent =
+            "We couldn't find that yet. Try Chamba, Manali or Spiti.";
+
+        }
+
+      }
+
+
+      if (visibleCount > 0) {
+
+        document
+          .querySelector("#stays")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }
+
+    });
+
+  }
 
       if (
         !searchText &&
