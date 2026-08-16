@@ -490,7 +490,7 @@
       </p>
 
       <h2>
-        Don’t just visit<br>
+        Don't just visit<br>
         the Himalayas.<br>
         <em>Experience them.</em>
       </h2>
@@ -600,7 +600,7 @@
       </h2>
 
       <p>
-        We’re building a direct discovery and enquiry platform
+        We're building a direct discovery and enquiry platform
         for hotels, hosts and local experiences.
       </p>
 
@@ -717,11 +717,64 @@
               Build My Trip →
             </button>
 
+            <button
+              class="destination-secondary"
+              id="virtualTourButton"
+              type="button"
+            >
+              🎥 Virtual Tour →
+            </button>
+
           </div>
 
         </div>
 
       </div>
+
+
+      <!-- =========================
+           VIRTUAL TOUR
+      ========================== -->
+
+      <section
+        class="virtual-tour-section"
+        id="virtualTourSection"
+      >
+
+        <div class="destination-section-heading">
+
+          <p class="eyebrow dark">
+            EXPLORE BEFORE YOU GO
+          </p>
+
+          <h3>
+            Virtual Tour
+          </h3>
+
+        </div>
+
+        <iframe
+          id="tourVideoFrame"
+          width="100%"
+          height="400"
+          style="border:0; border-radius:12px; margin-bottom:16px;"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+
+        <iframe
+          id="tourMapFrame"
+          width="100%"
+          height="300"
+          style="border:0; border-radius:12px; margin-bottom:16px;"
+        ></iframe>
+
+        <div
+          id="tourGallery"
+          class="tour-gallery"
+        ></div>
+
+      </section>
 
 
       <!-- =========================
@@ -1163,4 +1216,15 @@
       </section>
 
 
-      <!-- ========================
+    </div>
+    <!-- /destination-experience-panel -->
+
+  </div>
+  <!-- /destination-experience -->
+
+
+  <script src="script.js"></script>
+  <script src="virtual-tour.js"></script>
+
+</body>
+</html>
