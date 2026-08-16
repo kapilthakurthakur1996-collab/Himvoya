@@ -1,823 +1,1077 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: #f6f4ed;
-  color: #18251e;
-  font-family: 'DM Sans', sans-serif;
-}
-
-body.modal-open {
-  overflow: hidden;
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 76px;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 6%;
-  color: #fff;
-}
-
-.logo {
-  font-size: 23px;
-  font-weight: 700;
-}
-
-.logo i {
-  display: inline-grid;
-  place-items: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-family: Georgia;
-  margin-right: 8px;
-}
-
-.nav nav {
-  display: flex;
-  gap: 28px;
-  font-size: 14px;
-}
-
-.nav a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.outline {
-  border: 1px solid #ffffff80;
-  padding: 11px 17px;
-  border-radius: 30px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-  height: 88vh;
-  min-height: 700px;
-  position: relative;
-  color: white;
-  background: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=85') center/cover;
-}
-
-.shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #07130ddd,
-    #07130d70,
-    #07130d20
-  );
-}
-
-.hero-inner {
-  position: relative;
-  z-index: 1;
-  width: 88%;
-  max-width: 1120px;
-  margin: auto;
-  padding-top: 190px;
-}
-
-.eyebrow {
-  font-size: 11px;
-  letter-spacing: 2.4px;
-  font-weight: 700;
-  margin: 0 0 18px;
-}
-
-.hero h1 {
-  font-size: clamp(52px, 7vw, 88px);
-  line-height: .95;
-  letter-spacing: -3px;
-  margin: 0 0 24px;
-}
-
-.hero em,
-h2 em {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-}
-
-.lead {
-  max-width: 570px;
-  font-size: 17px;
-  line-height: 1.6;
-  color: #e5ece7;
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-.search {
-  margin-top: 32px;
-  background: white;
-  color: #18251e;
-  border-radius: 16px;
-  padding: 8px;
-  max-width: 800px;
-  display: flex;
-  box-shadow: 0 20px 50px #0004;
-}
-
-.search > div {
-  flex: 1;
-  padding: 7px 18px;
-  border-right: 1px solid #ddd;
-}
-
-.search label {
-  display: block;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  color: #6b756e;
-}
-
-.search input,
-.search select {
-  border: 0;
-  outline: 0;
-  width: 100%;
-  font: inherit;
-  margin-top: 5px;
-  background: white;
-}
-
-.search button,
-#partner button {
-  border: 0;
-  border-radius: 11px;
-  background: #1d392a;
-  color: white;
-  padding: 0 24px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.hero-inner > #result {
-  font-size: 13px;
-  min-height: 18px;
-}
-
-.scroll {
-  position: absolute;
-  bottom: 28px;
-  left: 6%;
-  font-size: 10px;
-  letter-spacing: 2px;
-}
-
-
-/* =========================
-   GENERAL SECTIONS
-========================= */
-
-.section {
-  padding: 100px 7%;
-  max-width: 1400px;
-  margin: auto;
-}
-
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 50px;
-  margin-bottom: 48px;
-}
-
-.head > p {
-  max-width: 430px;
-  color: #68736d;
-  line-height: 1.7;
-}
-
-.dark {
-  color: #69766e;
-}
-
-.section h2,
-.dark-section h2,
-.partner h2 {
-  font-size: clamp(40px, 5vw, 64px);
-  line-height: 1.02;
-  letter-spacing: -2px;
-  margin: 0;
-}
-
-
-/* =========================
-   PROPERTY CARDS
-========================= */
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-
-.card {
-  background: white;
-  border: 1px solid #e4e1d8;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: .25s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 40px #17201916;
-}
-
-.photo {
-  height: 320px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.photo span {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: white;
-  border-radius: 20px;
-  padding: 7px 10px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.p1 {
-  background-image: url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=80');
-}
-
-.p2 {
-  background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80');
-}
-
-.p3 {
-  background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=80');
-}
-
-.body {
-  padding: 23px;
-}
-
-.body small {
-  color: #718077;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.body h3 {
-  font-size: 23px;
-  margin: 8px 0;
-}
-
-.body p {
-  color: #68736d;
-  line-height: 1.6;
-  font-size: 14px;
-  min-height: 45px;
-}
-
-.body footer {
-  border-top: 1px solid #e7e4db;
-  padding-top: 15px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #69756d;
-}
-
-.body strong {
-  color: #1c2d23;
-}
-
-
-/* =========================
-   DARK SECTION
-========================= */
-
-.dark-section {
-  background: #18251e;
-  color: white;
-  max-width: none;
-  padding: 100px 7%;
-}
-
-.dark-section p {
-  color: #b9c4bd;
-  line-height: 1.7;
-}
-
-.dark-section h2 {
-  color: white;
-}
-
-
-/* =========================
-   PARTNER MODAL
-========================= */
-
-.partner-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  transition:
-    opacity 0.25s ease,
-    visibility 0.25s ease;
-}
-
-.partner-modal.active {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.partner-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(7, 19, 13, 0.72);
-  backdrop-filter: blur(8px);
-}
-
-.partner-dialog {
-  position: relative;
-  z-index: 1;
-
-  width: min(720px, 100%);
-  max-height: 92vh;
-  overflow-y: auto;
-
-  background: #fdfcf8;
-  color: #18251e;
-
-  border-radius: 24px;
-  border: 1px solid #ffffff;
-
-  box-shadow:
-    0 30px 90px rgba(0, 0, 0, 0.28);
-
-  transform: translateY(18px) scale(.98);
-
-  transition:
-    transform 0.25s ease;
-}
-
-.partner-modal.active .partner-dialog {
-  transform: translateY(0) scale(1);
-}
-
-.partner-close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-
-  width: 42px;
-  height: 42px;
-
-  border: 1px solid #deddd5;
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, .92);
-  color: #18251e;
-
-  font-size: 25px;
-  line-height: 1;
-
-  cursor: pointer;
-  z-index: 3;
-
-  transition: .2s;
-}
-
-.partner-close:hover {
-  background: #18251e;
-  color: white;
-}
-
-.partner-content {
-  padding: 48px;
-}
-
-.partner-content .eyebrow {
-  margin-bottom: 12px;
-}
-
-.partner-content h2 {
-  font-family: 'Playfair Display', serif;
-
-  font-size: clamp(38px, 6vw, 58px);
-  line-height: 1;
-
-  letter-spacing: -1.8px;
-
-  margin: 0 55px 14px 0;
-}
-
-.partner-content > p:not(.eyebrow) {
-  color: #68736d;
-
-  line-height: 1.65;
-
-  max-width: 560px;
-
-  margin: 0 0 30px;
-}
-
-
-/* =========================
-   PARTNER FORM
-========================= */
-
-#partnerForm {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 18px 16px;
-}
-
-#partnerForm label {
-  display: block;
-
-  grid-column: span 2;
-
-  margin: 3px 0 -8px;
-
-  color: #66736b;
-
-  font-size: 10px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.5px;
-}
-
-#partnerForm input,
-#partnerForm select,
-#partnerForm textarea {
-  width: 100%;
-
-  border: 1px solid #dcdcd3;
-
-  border-radius: 12px;
-
-  background: #fff;
-
-  color: #18251e;
-
-  font: inherit;
-
-  outline: none;
-
-  transition:
-    border-color .2s,
-    box-shadow .2s;
-}
-
-#partnerForm input,
-#partnerForm select {
-  height: 52px;
-
-  padding: 0 15px;
-}
-
-#partnerForm textarea {
-  min-height: 130px;
-
-  padding: 14px 15px;
-
-  resize: vertical;
-
-  line-height: 1.55;
-}
-
-#partnerForm input::placeholder,
-#partnerForm textarea::placeholder {
-  color: #9aa19c;
-}
-
-#partnerForm input:focus,
-#partnerForm select:focus,
-#partnerForm textarea:focus {
-  border-color: #426650;
-
-  box-shadow:
-    0 0 0 4px rgba(66, 102, 80, .10);
-}
-
-
-/* TWO COLUMN FIELDS */
-
-#partnerName,
-#propertyName,
-#propertyLocation,
-#propertyType,
-#propertyPrice,
-#partnerPhone {
-  grid-column: span 1;
-}
-
-
-/* DESCRIPTION */
-
-#propertyDescription {
-  grid-column: span 2;
-}
-
-
-/* =========================
-   SUBMIT BUTTON
-========================= */
-
-#partnerForm .primary-action {
-  grid-column: span 2;
-
-  min-height: 54px;
-
-  margin-top: 4px;
-
-  border: 0;
-
-  border-radius: 13px;
-
-  background: #1d392a;
-
-  color: white;
-
-  font: inherit;
-
-  font-weight: 700;
-
-  font-size: 14px;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 10px 25px rgba(29, 57, 42, .18);
-
-  transition:
-    transform .2s,
-    background .2s,
-    box-shadow .2s;
-}
-
-#partnerForm .primary-action:hover {
-  background: #254936;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 14px 30px rgba(29, 57, 42, .24);
-}
-
-#partnerForm .primary-action:active {
-  transform: translateY(0);
-}
-
-
-/* FORM MESSAGE */
-
-#partnerMessage {
-  grid-column: span 2;
-
-  margin: 0;
-
-  text-align: center;
-}
-
-
-/* FORM NOTE */
-
-#partnerForm::after {
-  content:
-    "By submitting, you agree to let HimVoya contact you about your listing.";
-
-  grid-column: span 2;
-
-  text-align: center;
-
-  color: #8a928d;
-
-  font-size: 11px;
-
-  line-height: 1.5;
-
-  margin-top: -6px;
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
-
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
+/* =========================================================
+   HIMVOYA — MAIN JAVASCRIPT
+   Search + Property Modal + Partner Modal
+   + AI Destination Experience Prototype
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =========================================================
+     ELEMENTS
+  ========================================================= */
+
+  const form = document.querySelector("#search");
+  const result = document.querySelector("#result");
+  const cards = [...document.querySelectorAll(".card")];
+  const where = document.querySelector("#where");
+  const kind = document.querySelector("#kind");
+
+  const listPlaceBtn = document.querySelector("#listPlaceBtn");
+  const partnerBtn = document.querySelector("#partnerBtn");
+
+  const partnerModal = document.querySelector("#partnerModal");
+  const partnerBackdrop = document.querySelector("#partnerBackdrop");
+  const partnerClose = document.querySelector("#partnerClose");
+  const partnerForm = document.querySelector("#partnerForm");
+  const partnerMessage = document.querySelector("#partnerMessage");
+
+  const propertyModal = document.querySelector("#propertyModal");
+  const modalBackdrop = document.querySelector("#modalBackdrop");
+  const modalClose = document.querySelector("#modalClose");
+
+  const modalImage = document.querySelector("#modalImage");
+  const modalCategory = document.querySelector("#modalCategory");
+  const modalTitle = document.querySelector("#modalTitle");
+  const modalLocation = document.querySelector("#modalLocation");
+  const modalDescription = document.querySelector("#modalDescription");
+  const modalPrice = document.querySelector("#modalPrice");
+  const modalMessage = document.querySelector("#modalMessage");
+
+  const availabilityBtn = document.querySelector("#availabilityBtn");
+  const enquiryBtn = document.querySelector("#enquiryBtn");
+
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
+  function lockBody() {
+    document.body.classList.add("modal-open");
   }
 
-  .photo {
-    height: 260px;
-  }
-
-}
-
-
-@media (max-width: 600px) {
-
-  .nav {
-    padding: 0 5%;
-  }
-
-  .nav nav {
-    display: none;
-  }
-
-  .outline {
-    padding: 10px 14px;
-  }
-
-  .hero {
-    min-height: 650px;
-  }
-
-  .hero-inner {
-    width: 90%;
-    padding-top: 150px;
-  }
-
-  .hero h1 {
-    font-size: 52px;
-  }
-
-  .search {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .search > div {
-    border-right: 0;
-    border-bottom: 1px solid #ddd;
-    padding: 12px 14px;
-  }
-
-  .search button {
-    min-height: 50px;
-  }
-
-  .section {
-    padding: 70px 5%;
-  }
-
-  .head {
-    display: block;
-  }
-
-  .head > p {
-    margin-top: 25px;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .photo {
-    height: 240px;
-  }
-
-  .body {
-    padding: 19px;
-  }
-
-  .body h3 {
-    font-size: 21px;
-  }
-
-  .body p {
-    min-height: auto;
+  function unlockBody() {
+    document.body.classList.remove("modal-open");
   }
 
 
-  /* PARTNER MODAL MOBILE */
+  /* =========================================================
+     SEARCH
+  ========================================================= */
 
-  .partner-modal {
-    padding: 12px;
+  if (form) {
 
-    align-items: flex-end;
+    form.addEventListener("submit", (event) => {
+
+      event.preventDefault();
+
+      const searchText = where.value.trim().toLowerCase();
+      const selectedType = kind.value;
+
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+
+        const place = card.dataset.place || "";
+        const type = card.dataset.type || "";
+
+        const placeMatch =
+          !searchText ||
+          place.includes(searchText) ||
+          searchText.includes(place);
+
+        const typeMatch =
+          selectedType === "all" ||
+          type === selectedType;
+
+        const show = placeMatch && typeMatch;
+
+        card.style.display = show ? "" : "none";
+
+        if (show) {
+          visibleCount++;
+        }
+
+      });
+
+
+      if (!searchText && selectedType === "all") {
+
+        result.textContent = "";
+
+        document.querySelector("#stays")?.scrollIntoView({
+          behavior: "smooth"
+        });
+
+        return;
+      }
+
+
+      if (visibleCount > 0) {
+
+        result.textContent =
+          `${visibleCount} ${visibleCount === 1 ? "place" : "places"} found.`;
+
+        document.querySelector("#stays")?.scrollIntoView({
+          behavior: "smooth"
+        });
+
+      } else {
+
+        result.textContent =
+          "We couldn't find that yet. Try Chamba, Himachal or another destination.";
+
+      }
+
+    });
+
   }
 
-  .partner-dialog {
-    width: 100%;
 
-    max-height: 94vh;
+  /* =========================================================
+     RESET SEARCH WHEN USER CLEARS INPUT
+  ========================================================= */
 
-    border-radius:
-      22px 22px 16px 16px;
+  if (where) {
+
+    where.addEventListener("input", () => {
+
+      if (where.value.trim() === "") {
+
+        cards.forEach(card => {
+          card.style.display = "";
+        });
+
+        if (result) {
+          result.textContent = "";
+        }
+
+      }
+
+    });
+
   }
 
-  .partner-content {
-    padding: 34px 20px 24px;
+
+  /* =========================================================
+     PROPERTY DATA
+  ========================================================= */
+
+  const propertyData = {
+
+    "Mountain View Retreat": {
+      category: "MOUNTAIN STAY",
+      location: "Himachal Pradesh",
+      price: "₹2,499 / night",
+      description:
+        "Quiet mornings, panoramic Himalayan peaks and warm local hospitality. A peaceful base for travellers who want to slow down and reconnect with the mountains.",
+      image:
+        "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=85"
+    },
+
+    "Forest Edge Boutique": {
+      category: "BOUTIQUE STAY",
+      location: "Chamba, Himachal Pradesh",
+      price: "₹2,999 / night",
+      description:
+        "A peaceful forest-edge retreat designed for slow travel, hiking, stargazing and discovering the quieter side of Chamba.",
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=85"
+    },
+
+    "Riverside Haven": {
+      category: "RIVERSIDE STAY",
+      location: "Himachal Pradesh",
+      price: "₹2,299 / night",
+      description:
+        "Wake up beside the river and explore hidden Himalayan villages, local food and peaceful mountain landscapes.",
+      image:
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=85"
+    }
+
+  };
+
+
+  /* =========================================================
+     PROPERTY MODAL
+  ========================================================= */
+
+  function openProperty(card) {
+
+    const title =
+      card.querySelector("h3")?.textContent.trim() ||
+      "Himalayan Stay";
+
+    const fallbackLocation =
+      card.querySelector("footer span")?.textContent.trim() ||
+      "Himachal Pradesh";
+
+    const fallbackPrice =
+      card.querySelector("footer strong")?.textContent.trim() ||
+      "Price on request";
+
+    const fallbackDescription =
+      card.querySelector(".body p")?.textContent.trim() ||
+      "A beautiful Himalayan stay.";
+
+    const data = propertyData[title] || {
+
+      category:
+        card.querySelector(".photo span")?.textContent.trim() ||
+        "HIMALAYAN STAY",
+
+      location: fallbackLocation,
+
+      price: fallbackPrice,
+
+      description: fallbackDescription,
+
+      image: ""
+
+    };
+
+
+    modalCategory.textContent = data.category;
+    modalTitle.textContent = title;
+    modalLocation.textContent = data.location;
+    modalDescription.textContent = data.description;
+    modalPrice.textContent = data.price;
+
+    modalMessage.textContent = "";
+
+
+    if (modalImage) {
+
+      modalImage.style.backgroundImage =
+        `url("${data.image}")`;
+
+      modalImage.style.backgroundSize = "cover";
+      modalImage.style.backgroundPosition = "center";
+
+    }
+
+
+    propertyModal.classList.add("active");
+    propertyModal.setAttribute("aria-hidden", "false");
+
+    lockBody();
+
   }
 
-  .partner-close {
-    top: 13px;
-    right: 13px;
 
-    width: 38px;
-    height: 38px;
+  function closeProperty() {
 
-    font-size: 22px;
+    propertyModal.classList.remove("active");
+    propertyModal.setAttribute("aria-hidden", "true");
+
+    unlockBody();
+
   }
 
-  .partner-content h2 {
-    font-size: 40px;
 
-    margin-right: 45px;
+  cards.forEach(card => {
+
+    card.style.cursor = "pointer";
+
+    card.addEventListener("click", () => {
+      openProperty(card);
+    });
+
+  });
+
+
+  if (modalClose) {
+    modalClose.addEventListener("click", closeProperty);
   }
 
-  .partner-content > p:not(.eyebrow) {
-    font-size: 14px;
-
-    margin-bottom: 25px;
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener("click", closeProperty);
   }
 
-  #partnerForm {
-    grid-template-columns: 1fr;
 
-    gap: 15px;
+  /* =========================================================
+     PROPERTY ACTIONS
+  ========================================================= */
+
+  if (availabilityBtn) {
+
+    availabilityBtn.addEventListener("click", () => {
+
+      modalMessage.textContent =
+        "Availability checking will be connected to the property partner in the next stage.";
+
+    });
+
   }
 
-  #partnerForm label,
-  #partnerName,
-  #propertyName,
-  #propertyLocation,
-  #propertyType,
-  #propertyPrice,
-  #partnerPhone,
-  #propertyDescription,
-  #partnerForm .primary-action,
-  #partnerMessage,
-  #partnerForm::after {
-    grid-column: span 1;
+
+  if (enquiryBtn) {
+
+    enquiryBtn.addEventListener("click", () => {
+
+      modalMessage.textContent =
+        "Your enquiry flow is ready. Direct partner messaging will be connected next.";
+
+    });
+
   }
 
-  #partnerForm label {
-    margin-bottom: -7px;
+
+  /* =========================================================
+     PARTNER MODAL
+  ========================================================= */
+
+  function openPartner() {
+
+    partnerModal.classList.add("active");
+
+    partnerModal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    lockBody();
+
+    setTimeout(() => {
+      document.querySelector("#partnerName")?.focus();
+    }, 150);
+
   }
 
-  #partnerForm input,
-  #partnerForm select {
-    height: 50px;
+
+  function closePartner() {
+
+    partnerModal.classList.remove("active");
+
+    partnerModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    unlockBody();
+
   }
 
-  #propertyDescription {
-    min-height: 120px;
+
+  if (listPlaceBtn) {
+
+    listPlaceBtn.addEventListener("click", (event) => {
+
+      event.preventDefault();
+
+      openPartner();
+
+    });
+
   }
 
-}
+
+  if (partnerBtn) {
+
+    partnerBtn.addEventListener("click", openPartner);
+
+  }
+
+
+  if (partnerClose) {
+
+    partnerClose.addEventListener(
+      "click",
+      closePartner
+    );
+
+  }
+
+
+  if (partnerBackdrop) {
+
+    partnerBackdrop.addEventListener(
+      "click",
+      closePartner
+    );
+
+  }
+
+
+  /* =========================================================
+     PARTNER FORM
+  ========================================================= */
+
+  if (partnerForm) {
+
+    partnerForm.addEventListener("submit", (event) => {
+
+      event.preventDefault();
+
+      const name =
+        document.querySelector("#partnerName")?.value.trim();
+
+      const property =
+        document.querySelector("#propertyName")?.value.trim();
+
+      if (!name || !property) {
+        return;
+      }
+
+
+      partnerMessage.textContent =
+        `Thank you, ${name}. Your listing "${property}" has been received. We'll connect with you soon.`;
+
+      partnerMessage.style.color = "#315c43";
+
+      partnerForm.reset();
+
+    });
+
+  }
+
+
+  /* =========================================================
+     ESCAPE KEY
+  ========================================================= */
+
+  document.addEventListener("keydown", (event) => {
+
+    if (event.key !== "Escape") {
+      return;
+    }
+
+    if (propertyModal?.classList.contains("active")) {
+      closeProperty();
+    }
+
+    if (partnerModal?.classList.contains("active")) {
+      closePartner();
+    }
+
+  });
+
+
+  /* =========================================================
+     HIMVOYA DESTINATION EXPERIENCE
+  =========================================================
+     
+     This creates the first prototype dynamically.
+  ========================================================= */
+
+  const destinations = {
+
+    chamba: {
+
+      name: "Chamba",
+
+      subtitle:
+        "Ancient temples, quiet valleys & authentic mountain life.",
+
+      image:
+        "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1800&q=85",
+
+      guide:
+        "Namaste! I'm your HimVoya mountain guide for Chamba. I can help you discover places, food, experiences and build a trip around your travel style.",
+
+      itinerary: {
+
+        2:
+          "Day 1: Chamba town, Lakshmi Narayan Temple, local market and sunset viewpoint.\n\nDay 2: Khajjiar excursion, forest walk, local food and return to Chamba.",
+
+        3:
+          "Day 1: Explore Chamba town and ancient temples.\n\nDay 2: Khajjiar, forest walk and sunset.\n\nDay 3: Local village experience, traditional food and a relaxed mountain morning.",
+
+        5:
+          "Day 1: Chamba arrival and town exploration.\n\nDay 2: Khajjiar and forest trails.\n\nDay 3: Local village and cultural experience.\n\nDay 4: Hiking and hidden viewpoints.\n\nDay 5: Slow morning, local food and departure.",
+
+        7:
+          "A relaxed 7-day Chamba journey combining temples, villages, forests, hikes, local food, viewpoints and slow Himalayan mornings."
+
+      }
+
+    },
+
+
+    manali: {
+
+      name: "Manali",
+
+      subtitle:
+        "Mountain adventures, cafés, forests & high-altitude escapes.",
+
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85",
+
+      guide:
+        "Welcome to Manali. Tell me whether you want adventure, relaxation, nature, food or a mix — I'll shape the journey around you.",
+
+      itinerary: {
+
+        2:
+          "Day 1: Old Manali, cafés, local market and riverside walk.\n\nDay 2: Solang Valley and mountain activities.",
+
+        3:
+          "Day 1: Old Manali and riverside exploration.\n\nDay 2: Solang Valley adventure.\n\nDay 3: Hadimba Temple, forest walk and local cafés.",
+
+        5:
+          "Day 1: Old Manali.\n\nDay 2: Solang Valley.\n\nDay 3: Local village and café trail.\n\nDay 4: Nature excursion.\n\nDay 5: Relaxed mountain morning.",
+
+        7:
+          "A 7-day Manali experience combining adventure, forests, cafés, villages, scenic drives and relaxed Himalayan evenings."
+
+      }
+
+    },
+
+
+    spiti: {
+
+      name: "Spiti Valley",
+
+      subtitle:
+        "High-altitude landscapes, monasteries & raw Himalayan wilderness.",
+
+      image:
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1800&q=85",
+
+      guide:
+        "Welcome to Spiti. This is a slower, more remote journey. I can help you balance monasteries, landscapes, villages and acclimatization.",
+
+      itinerary: {
+
+        2:
+          "Day 1: Kaza exploration and local monastery visit.\n\nDay 2: Key Monastery, high-altitude villages and scenic viewpoints.",
+
+        3:
+          "Day 1: Kaza and acclimatization.\n\nDay 2: Key Monastery and Kibber.\n\nDay 3: Langza, Hikkim and Komik.",
+
+        5:
+          "Day 1: Kaza and acclimatization.\n\nDay 2: Key and Kibber.\n\nDay 3: Langza, Hikkim and Komik.\n\nDay 4: Dhankar region.\n\nDay 5: Local village experience and departure.",
+
+        7:
+          "A 7-day slow Spiti journey covering monasteries, high-altitude villages, landscapes, local food and remote Himalayan experiences."
+
+      }
+
+    }
+
+  };
+
+
+  /* =========================================================
+     CREATE DESTINATION EXPERIENCE
+  ========================================================= */
+
+  function createDestinationExperience() {
+
+    if (document.querySelector("#destinationExperience")) {
+      return;
+    }
+
+
+    const modal = document.createElement("div");
+
+    modal.id = "destinationExperience";
+
+    modal.innerHTML = `
+
+      <div class="destination-backdrop"></div>
+
+      <div class="destination-dialog">
+
+        <button
+          class="destination-close"
+          type="button"
+          aria-label="Close destination experience"
+        >
+          ×
+        </button>
+
+        <div
+          class="destination-hero"
+          id="destinationHero"
+        >
+
+          <div class="destination-overlay"></div>
+
+          <div class="destination-hero-content">
+
+            <p class="eyebrow">
+              HIMVOYA AI DESTINATION EXPERIENCE
+            </p>
+
+            <h2 id="destinationTitle">
+              Chamba
+            </h2>
+
+            <p id="destinationSubtitle">
+              Discover the mountains differently.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="destination-content">
+
+          <div class="ai-guide">
+
+            <div class="ai-guide-icon">
+              H
+            </div>
+
+            <div>
+
+              <small>
+                HIMVOYA AI GUIDE
+              </small>
+
+              <p id="guideMessage">
+                Namaste! I'm your HimVoya mountain guide.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="destination-grid">
+
+            <section>
+
+              <p class="eyebrow dark">
+                ASK YOUR GUIDE
+              </p>
+
+              <h3>
+                What do you want to discover?
+              </h3>
+
+              <div class="question-buttons">
+
+                <button data-question="best places">
+                  Best places to visit
+                </button>
+
+                <button data-question="local food">
+                  Local food
+                </button>
+
+                <button data-question="hidden places">
+                  Hidden places
+                </button>
+
+                <button data-question="best time">
+                  Best time to visit
+                </button>
+
+              </div>
+
+
+              <div class="ai-chat">
+
+                <div
+                  id="aiResponse"
+                  class="ai-response"
+                >
+                  Ask me anything about this destination.
+                </div>
+
+                <div class="ai-input">
+
+                  <input
+                    id="aiQuestion"
+                    type="text"
+                    placeholder="Ask your HimVoya guide..."
+                  >
+
+                  <button
+                    id="askAI"
+                    type="button"
+                  >
+                    Ask →
+                  </button>
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <section class="trip-builder">
+
+              <p class="eyebrow dark">
+                BUILD YOUR JOURNEY
+              </p>
+
+              <h3>
+                How long are you staying?
+              </h3>
+
+              <div class="duration-buttons">
+
+                <button data-days="2">
+                  2 Days
+                </button>
+
+                <button data-days="3">
+                  3 Days
+                </button>
+
+                <button data-days="5">
+                  5 Days
+                </button>
+
+                <button data-days="7">
+                  7 Days
+                </button>
+
+              </div>
+
+              <div
+                id="itineraryResult"
+                class="itinerary-result"
+              >
+                Choose a duration to create your journey.
+              </div>
+
+              <button
+                class="build-trip"
+                id="buildTrip"
+                type="button"
+              >
+                Build My Trip →
+              </button>
+
+            </section>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    document.body.appendChild(modal);
+
+
+    /* =========================================================
+       DESTINATION MODAL EVENTS
+    ========================================================= */
+
+    const closeButton =
+      modal.querySelector(".destination-close");
+
+    const backdrop =
+      modal.querySelector(".destination-backdrop");
+
+
+    function closeDestination() {
+
+      modal.classList.remove("active");
+
+      unlockBody();
+
+    }
+
+
+    closeButton.addEventListener(
+      "click",
+      closeDestination
+    );
+
+    backdrop.addEventListener(
+      "click",
+      closeDestination
+    );
+
+
+    /* =========================================================
+       DESTINATION DATA
+    ========================================================= */
+
+    let currentDestination = destinations.chamba;
+
+    let selectedDays = 3;
+
+
+    function setDestination(destination) {
+
+      currentDestination = destination;
+
+      document.querySelector("#destinationTitle").textContent =
+        destination.name;
+
+      document.querySelector("#destinationSubtitle").textContent =
+        destination.subtitle;
+
+      document.querySelector("#guideMessage").textContent =
+        destination.guide;
+
+      document.querySelector("#destinationHero").style.backgroundImage =
+        `url("${destination.image}")`;
+
+      document.querySelector("#aiResponse").textContent =
+        "Ask me anything about this destination.";
+
+      document.querySelector("#itineraryResult").textContent =
+        "Choose a duration to create your journey.";
+
+    }
+
+
+    /* =========================================================
+       AI QUESTIONS
+    ========================================================= */
+
+    function answerQuestion(question) {
+
+      const q = question.toLowerCase();
+
+      let response = "";
+
+      if (q.includes("food")) {
+
+        response =
+          `For ${currentDestination.name}, I'd suggest prioritising local food over generic tourist restaurants. Try regional dishes, local cafés and a meal with a Himalayan host if available.`;
+
+      } else if (q.includes("hidden")) {
+
+        response =
+          `For a quieter ${currentDestination.name} experience, look beyond the main tourist points. HimVoya can prioritise villages, short trails, viewpoints and locally hosted experiences.`;
+
+      } else if (q.includes("time")) {
+
+        response =
+          `The ideal time depends on what you want to experience. Tell me whether you prefer greenery, snow, trekking or a quieter season and I'll adapt the trip.`;
+
+      } else if (q.includes("best") || q.includes("visit")) {
+
+        response =
+          `I'd build your ${currentDestination.name} trip around 2–3 major highlights and then add slower local experiences so the journey doesn't feel rushed.`;
+
+      } else {
+
+        response =
+          `That's exactly the kind of question HimVoya is designed for. For ${currentDestination.name}, I can help combine places, stays, food and experiences into one personalised journey.`;
+
+      }
+
+      document.querySelector("#aiResponse").textContent =
+        response;
+
+    }
+
+
+    document
+      .querySelectorAll(".question-buttons button")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          answerQuestion(
+            button.dataset.question
+          );
+
+        });
+
+      });
+
+
+    const aiInput =
+      document.querySelector("#aiQuestion");
+
+    const aiButton =
+      document.querySelector("#askAI");
+
+
+    aiButton.addEventListener("click", () => {
+
+      const question =
+        aiInput.value.trim();
+
+      if (!question) {
+        return;
+      }
+
+      answerQuestion(question);
+
+      aiInput.value = "";
+
+    });
+
+
+    aiInput.addEventListener("keydown", event => {
+
+      if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        aiButton.click();
+
+      }
+
+    });
+
+
+    /* =========================================================
+       ITINERARY
+    ========================================================= */
+
+    document
+      .querySelectorAll(".duration-buttons button")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          selectedDays =
+            Number(button.dataset.days);
+
+          document
+            .querySelectorAll(".duration-buttons button")
+            .forEach(btn => {
+              btn.classList.remove("selected");
+            });
+
+          button.classList.add("selected");
+
+          document.querySelector("#itineraryResult").textContent =
+            currentDestination.itinerary[selectedDays];
+
+        });
+
+      });
+
+
+    /* =========================================================
+       BUILD TRIP
+    ========================================================= */
+
+    document
+      .querySelector("#buildTrip")
+      .addEventListener("click", () => {
+
+        document.querySelector("#itineraryResult").textContent =
+          `Your ${selectedDays}-day ${currentDestination.name} journey is ready. Next, HimVoya can match this itinerary with stays, experiences and local partners.`;
+
+      });
+
+
+    /* =========================================================
+       EXPOSE OPEN FUNCTION
+    ========================================================= */
+
+    window.openHimVoyaDestination = function(destinationName) {
+
+      const key =
+        destinationName.toLowerCase().replace(/\s+/g, "");
+
+      const destination =
+        destinations[key] || destinations.chamba;
+
+      setDestination(destination);
+
+      modal.classList.add("active");
+
+      lockBody();
+
+    };
+
+  }
+
+
+  createDestinationExperience();
+
+
+  /* =========================================================
+     MAKE DESTINATION SEARCH OPEN AI EXPERIENCE
+  ========================================================= */
+
+  if (where) {
+
+    where.addEventListener("keydown", event => {
+
+      if (event.key !== "Enter") {
+        return;
+      }
+
+      const value =
+        where.value.trim().toLowerCase();
+
+      if (
+        value.includes("chamba") ||
+        value.includes("manali") ||
+        value.includes("spiti")
+      ) {
+
+        event.preventDefault();
+
+        let destination = "chamba";
+
+        if (value.includes("manali")) {
+          destination = "manali";
+        }
+
+        if (value.includes("spiti")) {
+          destination = "spiti";
+        }
+
+        window.openHimVoyaDestination(destination);
+
+      }
+
+    });
+
+  }
+
+
+  /* =========================================================
+     ADD DESTINATION EXPERIENCE BUTTONS TO PAGE
+  ========================================================= */
+
+  const experienceSection =
+    document.querySelector("#experiences");
+
+  if (experienceSection) {
+
+    const buttonWrap =
+      document.createElement("div");
+
+    buttonWrap.className =
+      "destination-buttons";
+
+    buttonWrap.innerHTML = `
+
+      <button data-destination="chamba">
+        Explore Chamba →
+      </button>
+
+      <button data-destination="manali">
+        Explore Manali →
+      </button>
+
+      <button data-destination="spiti">
+        Explore Spiti →
+      </button>
+
+    `;
+
+    experienceSection.appendChild(buttonWrap);
+
+
+    buttonWrap
+      .querySelectorAll("button")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          window.openHimVoyaDestination(
+            button.dataset.destination
+          );
+
+        });
+
+      });
+
+  }
+
+
+});
