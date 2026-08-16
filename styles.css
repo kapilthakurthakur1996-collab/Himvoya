@@ -1605,3 +1605,561 @@ h2 em {
   }
 
 }
+/* =========================================================
+   HIMVOYA AI DESTINATION EXPERIENCE
+========================================================= */
+
+#destinationExperience {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity .3s ease,
+    visibility .3s ease;
+}
+
+#destinationExperience.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.destination-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 14, 10, .82);
+  backdrop-filter: blur(12px);
+}
+
+.destination-dialog {
+  position: relative;
+  z-index: 1;
+
+  width: min(1100px, 100%);
+  max-height: 94vh;
+
+  overflow-y: auto;
+
+  background: #fdfcf8;
+  color: #18251e;
+
+  border-radius: 26px;
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.38);
+
+  transform:
+    translateY(25px)
+    scale(.97);
+
+  transition:
+    transform .3s ease;
+}
+
+#destinationExperience.active
+.destination-dialog {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+
+/* =========================================================
+   DESTINATION HERO
+========================================================= */
+
+.destination-hero {
+  position: relative;
+
+  height: 380px;
+
+  background-size: cover;
+  background-position: center;
+
+  border-radius: 26px 26px 0 0;
+}
+
+.destination-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4,14,9,.15),
+      rgba(4,14,9,.82)
+    );
+
+  border-radius: inherit;
+}
+
+.destination-hero-content {
+  position: absolute;
+  left: 48px;
+  right: 48px;
+  bottom: 42px;
+
+  color: white;
+}
+
+.destination-hero-content h2 {
+  margin: 0 0 10px;
+
+  font-size:
+    clamp(48px, 7vw, 82px);
+
+  line-height: .95;
+
+  letter-spacing: -3px;
+}
+
+.destination-hero-content p:last-child {
+  max-width: 620px;
+
+  margin: 0;
+
+  color: #e3ebe6;
+
+  font-size: 17px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.destination-close {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  z-index: 5;
+
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid rgba(255,255,255,.4);
+
+  border-radius: 50%;
+
+  background: rgba(0,0,0,.25);
+
+  color: white;
+
+  font-size: 27px;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(8px);
+
+  transition: .2s;
+}
+
+.destination-close:hover {
+  background: white;
+  color: #18251e;
+}
+
+
+/* =========================================================
+   DESTINATION CONTENT
+========================================================= */
+
+.destination-content {
+  padding: 44px;
+}
+
+
+/* =========================================================
+   AI GUIDE
+========================================================= */
+
+.ai-guide {
+  display: flex;
+  gap: 16px;
+
+  padding: 20px;
+
+  margin-bottom: 42px;
+
+  background: #edf2ed;
+
+  border: 1px solid #dce5dd;
+
+  border-radius: 18px;
+}
+
+.ai-guide-icon {
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #1d392a;
+  color: white;
+
+  font-family: Georgia, serif;
+
+  font-size: 19px;
+}
+
+.ai-guide small {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #627068;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.ai-guide p {
+  margin: 0;
+
+  color: #46554d;
+
+  line-height: 1.6;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   DESTINATION GRID
+========================================================= */
+
+.destination-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 50px;
+}
+
+.destination-grid section {
+  min-width: 0;
+}
+
+.destination-grid h3 {
+  margin: 0 0 22px;
+
+  font-size: 28px;
+
+  letter-spacing: -.8px;
+}
+
+
+/* =========================================================
+   QUESTION BUTTONS
+========================================================= */
+
+.question-buttons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-bottom: 22px;
+}
+
+.question-buttons button,
+.duration-buttons button {
+  border: 1px solid #d9ded8;
+
+  background: white;
+
+  color: #34443b;
+
+  padding: 10px 14px;
+
+  border-radius: 30px;
+
+  font: inherit;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.question-buttons button:hover,
+.duration-buttons button:hover,
+.duration-buttons button.selected {
+  background: #1d392a;
+
+  border-color: #1d392a;
+
+  color: white;
+}
+
+
+/* =========================================================
+   AI CHAT
+========================================================= */
+
+.ai-chat {
+  border: 1px solid #dedfd8;
+
+  border-radius: 17px;
+
+  overflow: hidden;
+
+  background: white;
+}
+
+.ai-response {
+  min-height: 120px;
+
+  padding: 18px;
+
+  color: #58655e;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+}
+
+.ai-input {
+  display: flex;
+
+  border-top: 1px solid #e5e5df;
+}
+
+.ai-input input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: 0;
+
+  outline: 0;
+
+  padding: 15px;
+
+  font: inherit;
+
+  background: white;
+}
+
+.ai-input button {
+  border: 0;
+
+  background: #1d392a;
+
+  color: white;
+
+  padding: 0 19px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   TRIP BUILDER
+========================================================= */
+
+.trip-builder {
+  padding-left: 34px;
+
+  border-left: 1px solid #dedfd8;
+}
+
+.duration-buttons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-bottom: 18px;
+}
+
+.itinerary-result {
+  min-height: 170px;
+
+  white-space: pre-line;
+
+  padding: 20px;
+
+  background: #f2f0e8;
+
+  border-radius: 16px;
+
+  color: #56645c;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+.build-trip {
+  width: 100%;
+
+  margin-top: 15px;
+
+  min-height: 52px;
+
+  border: 0;
+
+  border-radius: 13px;
+
+  background: #1d392a;
+
+  color: white;
+
+  font: inherit;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.build-trip:hover {
+  background: #294b39;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   DESTINATION BUTTONS ON EXPERIENCE SECTION
+========================================================= */
+
+.destination-buttons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 30px;
+}
+
+.destination-buttons button {
+  border: 1px solid rgba(255,255,255,.3);
+
+  background: rgba(255,255,255,.08);
+
+  color: white;
+
+  padding: 13px 18px;
+
+  border-radius: 30px;
+
+  font: inherit;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.destination-buttons button:hover {
+  background: white;
+
+  color: #18251e;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  #destinationExperience {
+    padding: 10px;
+
+    align-items: flex-end;
+  }
+
+  .destination-dialog {
+    max-height: 95vh;
+
+    border-radius:
+      22px 22px 14px 14px;
+  }
+
+  .destination-hero {
+    height: 300px;
+
+    border-radius:
+      22px 22px 0 0;
+  }
+
+  .destination-hero-content {
+    left: 24px;
+    right: 24px;
+    bottom: 28px;
+  }
+
+  .destination-hero-content h2 {
+    font-size: 52px;
+  }
+
+  .destination-content {
+    padding: 25px 20px 30px;
+  }
+
+  .ai-guide {
+    margin-bottom: 28px;
+  }
+
+  .destination-grid {
+    grid-template-columns: 1fr;
+
+    gap: 35px;
+  }
+
+  .trip-builder {
+    padding-left: 0;
+
+    padding-top: 30px;
+
+    border-left: 0;
+
+    border-top: 1px solid #dedfd8;
+  }
+
+  .destination-grid h3 {
+    font-size: 24px;
+  }
+
+  .destination-close {
+    top: 12px;
+    right: 12px;
+  }
+
+}
