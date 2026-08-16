@@ -53,11 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function unlockBody() {
     document.body.classList.remove("modal-open");
-  }
-
-
   /* =========================================================
-     SEARCH
+     SEARCH + AI DESTINATION EXPERIENCE
   ========================================================= */
 
   if (form && where && kind) {
@@ -67,27 +64,66 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       const searchText =
-        where.value.trim().toLowerCase();
+        where.value.trim();
 
       const selectedType =
         kind.value;
+
+      /* -----------------------------------------
+         1. DESTINATION SEARCH → AI EXPERIENCE
+      ----------------------------------------- */
+
+      if (searchText) {
+
+        const destinationKey =
+          detectDestination(searchText);
+
+        /*
+         * If the user searches a known destination,
+         * open the HimVoya AI Destination Experience
+         * directly instead of only filtering cards.
+         */
+
+        if (
+          searchText.toLowerCase().includes("chamba") ||
+          searchText.toLowerCase().includes("manali") ||
+          searchText.toLowerCase().includes("spiti")
+        ) {
+
+          window.openHimVoyaDestination(
+            destinationKey
+          );
+
+          return;
+        }
+
+      }
+
+
+      /* -----------------------------------------
+         2. NORMAL STAY FILTER
+      ----------------------------------------- */
+
+      const searchLower =
+        searchText.toLowerCase();
 
       let visibleCount = 0;
 
       cards.forEach((card) => {
 
         const place =
-          (card.dataset.place || "").toLowerCase();
+          (card.dataset.place || "")
+            .toLowerCase();
 
         const type =
           card.dataset.type || "";
 
         const placeMatch =
-          !searchText ||
-          place.includes(searchText) ||
-          searchText.includes(place) ||
+          !searchLower ||
+          place.includes(searchLower) ||
+          searchLower.includes(place) ||
           (
-            searchText.includes("himachal") &&
+            searchLower.includes("himachal") &&
             place.includes("himachal")
           );
 
@@ -108,7 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
 
-      if (!searchText && selectedType === "all") {
+      /* -----------------------------------------
+         3. EMPTY SEARCH
+      ----------------------------------------- */
+
+      if (
+        !searchText &&
+        selectedType === "all"
+      ) {
 
         if (result) {
           result.textContent = "";
@@ -117,6 +160,50 @@ document.addEventListener("DOMContentLoaded", () => {
         document
           .querySelector("#stays")
           ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+        return;
+      }
+
+
+      /* -----------------------------------------
+         4. SEARCH RESULT MESSAGE
+      ----------------------------------------- */
+
+      if (visibleCount > 0) {
+
+        if (result) {
+
+          result.textContent =
+            `${visibleCount} ${
+              visibleCount === 1
+                ? "place"
+                : "places"
+            } found.`;
+
+        }
+
+        document
+          .querySelector("#stays")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+      } else {
+
+        if (result) {
+
+          result.textContent =
+            "We couldn't find that yet. Try Chamba, Manali or Spiti.";
+
+        }
+
+      }
+
+    });
+
+  }
             behavior: "smooth"
           });
 
