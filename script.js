@@ -1146,20 +1146,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
               <div
-                id="itineraryResult"
-                class="itinerary-result"
-              >
-                Choose a duration to create your journey.
-              </div>
+  id="itineraryResult"
+  class="itinerary-result"
+>
+  Choose a duration to create your journey.
+</div>
 
+<div class="destination-actions">
 
-              <button
-                class="build-trip"
-                id="buildTrip"
-                type="button"
-              >
-                Build My Trip →
-              </button>
+  <button
+    class="build-trip"
+    id="buildTrip"
+    type="button"
+  >
+    Build My Trip →
+  </button>
+
+  <button
+    class="build-trip virtual-tour-trigger"
+    id="virtualTourButton"
+    type="button"
+  >
+    Explore Virtual Tour →
+  </button>
+
+</div>
 
             </section>
 
