@@ -1609,7 +1609,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+/* =========================================================
+   VIRTUAL TOUR CONNECTION
+========================================================= */
 
+const virtualTourButton =
+  modal.querySelector("#virtualTourButton");
+
+if (virtualTourButton) {
+
+  virtualTourButton.addEventListener(
+    "click",
+    (event) => {
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const destinationName =
+        currentDestination?.name || "Chamba";
+
+      if (
+        window.HimVoyaVirtualTour &&
+        typeof window.HimVoyaVirtualTour.open === "function"
+      ) {
+
+        /*
+         * Close AI destination modal first
+         */
+        modal.classList.remove("active");
+        unlockBody();
+
+        /*
+         * Open real HimVoya virtual tour
+         */
+        window.HimVoyaVirtualTour.open(
+          destinationName
+        );
+
+      } else {
+
+        console.warn(
+          "HimVoya Virtual Tour is not available yet."
+        );
+
+      }
+
+    }
+  );
+
+}
     /* =========================================================
        GLOBAL OPEN FUNCTION
     ========================================================= */
