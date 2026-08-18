@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HimVoya AI Destination Experience</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f5;
+      color: #17231d;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .topbar {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      color: #173f2b;
+    }
+
+    .badge {
+      background: #e5f1e8;
+      color: #28613f;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      background: linear-gradient(135deg, #173f2b, #285f43);
+      color: white;
+      border-radius: 28px;
+      padding: 42px 34px;
+      margin-bottom: 24px;
+    }
+
+    .hero small {
+      opacity: .8;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      line-height: 1.05;
+      max-width: 720px;
+      margin: 14px 0;
+    }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 17px;
+      line-height: 1.6;
+      opacity: .9;
+    }
+
+    .destination-box {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      padding: 24px;
+      border-radius: 22px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.06);
+      margin-bottom: 24px;
+    }
+
+    .destination-box h2 {
+      margin-bottom: 15px;
+      font-size: 21px;
+    }
+
+    .destinations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .destination {
+      border: 1px solid #d7dfd9;
+      background: #fff;
+      padding: 11px 17px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .destination:hover,
+    .destination.active {
+      background: #173f2b;
+      color: white;
+      border-color: #173f2b;
+    }
+
+    .experience {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+    }
+
+    .guide-card,
+    .chat-card {
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.06);
+    }
+
+    .guide-card {
+      padding: 25px;
+    }
+
+    .guide-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #dfeee3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 16px;
+    }
+
+    .guide-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .guide-card p {
+      color: #66736b;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .quick {
+      margin-top: 22px;
+    }
+
+    .quick button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid #e0e6e1;
+      background: #f8faf8;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .chat-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 560px;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid #edf0ed;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .online {
+      font-size: 12px;
+      color: #438158;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 22px;
+      overflow-y: auto;
+      min-height: 380px;
+    }
+
+    .message {
+      max-width: 78%;
+      padding: 13px 16px;
+      border-radius: 16px;
+      margin-bottom: 13px;
+      line-height: 1.5;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .ai {
+      background: #eef4ef;
+      border-bottom-left-radius: 4px;
+    }
+
+    .user {
+      background: #173f2b;
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+
+    .composer {
+      padding: 15px;
+      border-top: 1px solid #edf0ed;
+      display: flex;
+      gap: 10px;
+    }
+
+    .composer input {
+      flex: 1;
+      border: 1px solid #d9e0db;
+      border-radius: 14px;
+      padding: 14px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .composer button {
+      border: none;
+      background: #173f2b;
+      color: white;
+      padding: 0 20px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .composer button:hover {
+      background: #0f2f20;
+    }
+
+    .typing {
+      opacity: .6;
+      font-style: italic;
+    }
+
+    @media (max-width: 800px) {
+      .page {
+        padding: 12px;
+      }
+
+      .experience {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 30px 22px;
+      }
+
+      .message {
+        max-width: 88%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <div class="topbar">
+      <div class="logo">HimVoya</div>
+      <div class="badge">AI Destination Experience</div>
+    </div>
+
+    <section class="hero">
+      <small>YOUR AI TRAVEL COMPANION</small>
+
+      <h1>
+        Explore the Himalayas with your own AI guide.
+      </h1>
+
+      <p>
+        Tell HimVoya what kind of trip you want.
+        Your AI guide can help with destinations,
+        itineraries, stays, experiences and budgets.
+      </p>
+    </section>
+
+    <section class="destination-box">
+
+      <h2>Choose your destination</h2>
+
+      <div class="destinations">
+
+        <button class="destination active" data-destination="Manali">
+          Manali
+        </button>
+
+        <button class="destination" data-destination="Kasol">
+          Kasol
+        </button>
+
+        <button class="destination" data-destination="Spiti Valley">
+          Spiti Valley
+        </button>
+
+        <button class="destination" data-destination="Dharamshala">
+          Dharamshala
+        </button>
+
+        <button class="destination" data-destination="Chamba">
+          Chamba
+        </button>
+
+      </div>
+
+    </section>
+
+    <section class="experience">
+
+      <aside class="guide-card">
+
+        <div class="guide-avatar">🏔️</div>
+
+        <h3>HimVoya AI Guide</h3>
+
+        <p>
+          Your intelligent Himalayan travel companion.
+          Ask me anything about your destination.
+        </p>
+
+        <div class="quick">
+
+          <strong>Try asking</strong>
+
+          <button data-question="Create a 3 day itinerary for me">
+            🗺️ Create a 3-day itinerary
+          </button>
+
+          <button data-question="Plan a trip under ₹20000">
+            💰 Plan my trip under ₹20,000
+          </button>
+
+          <button data-question="Suggest the best experiences">
+            ✨ Suggest experiences
+          </button>
+
+          <button data-question="Suggest good stays">
+            🏡 Suggest stays
+          </button>
+
+        </div>
+
+      </aside>
+
+      <main class="chat-card">
+
+        <div class="chat-header">
+
+          <div>
+            <strong>HimVoya AI</strong>
+            <span class="online">● Ready to help</span>
+          </div>
+
+          <span id="currentDestination">
+            Manali
+          </span>
+
+        </div>
+
+        <div class="messages" id="messages">
+
+          <div class="message ai">
+            Namaste! 👋
+
+            I'm your HimVoya AI Guide.
+
+            I can help you plan your Himalayan trip.
+
+            Tell me what you want to do in Manali — itinerary, budget, stays, experiences or anything else.
+          </div>
+
+        </div>
+
+        <div class="composer">
+
+          <input
+            id="userInput"
+            type="text"
+            placeholder="Ask your AI travel guide..."
+          >
+
+          <button id="sendButton">
+            Send
+          </button>
+
+        </div>
+
+      </main>
+
+    </section>
+
+  </div>
+
+  <script>
+
+    let selectedDestination = "Manali";
+
+    const messages = document.getElementById("messages");
+    const input = document.getElementById("userInput");
+    const sendButton = document.getElementById("sendButton");
+    const currentDestination =
+      document.getElementById("currentDestination");
+
+    const destinationButtons =
+      document.querySelectorAll(".destination");
+
+    const quickButtons =
+      document.querySelectorAll(".quick button");
+
+
+    function addMessage(text, type) {
+
+      const message = document.createElement("div");
+
+      message.className =
+        "message " + type;
+
+      message.textContent = text;
+
+      messages.appendChild(message);
+
+      messages.scrollTop =
+        messages.scrollHeight;
+    }
+
+
+    function getAIResponse(question) {
+
+      const q =
+        question.toLowerCase();
+
+      if (q.includes("3 day") ||
+          q.includes("3-day") ||
+          q.includes("itinerary")) {
+
+        return `Absolutely! 🏔️
+
+Here's a sample 3-day ${selectedDestination} plan:
+
+Day 1 — Arrival & local exploration
+• Check-in at your stay
+• Explore the local market
+• Café / local food experience
+• Evening leisure
+
+Day 2 — Himalayan experience
+• Start early
+• Visit a major scenic attraction
+• Local activity / nature experience
+• Sunset viewpoint
+
+Day 3 — Slow Himalayan morning
+• Breakfast with a mountain view
+• Short local exploration
+• Shopping / local experiences
+• Departure
+
+I can later personalize this according to your budget, travel dates and interests.`;
+      }
+
+
+      if (q.includes("20000") ||
+          q.includes("budget")) {
+
+        return `Yes 👍
+
+For a ₹20,000 trip to ${selectedDestination}, I would roughly divide the budget like this:
+
+Stay: ₹6,000–₹7,000
+Food: ₹3,000–₹4,000
+Local transport: ₹3,000
+Activities: ₹2,000–₹3,000
+Buffer: ₹2,000
+
+The exact plan will depend on your starting city and number of travellers.
+
+Tell me your travel dates and I'll build a more specific plan.`;
+      }
+
+
+      if (q.includes("stay") ||
+          q.includes("hotel")) {
+
+        return `🏡 For ${selectedDestination}, I can help you find stays based on:
+
+• Mountain / valley view
+• Budget
+• Couple-friendly stays
+• Family stays
+• Boutique properties
+• Unique local stays
+
+In the full HimVoya version, these recommendations can connect directly to available properties.`;
+      }
+
+
+      if (q.includes("experience") ||
+          q.includes("activity")) {
+
+        return `✨ Some experiences I would consider for ${selectedDestination}:
+
+• Local food experience
+• Himalayan nature walk
+• Scenic viewpoint
+• Village / culture experience
+• Adventure activity
+• Sunset / sunrise experience
+
+Tell me whether you prefer **adventure, nature, culture or relaxation** and I'll personalize them.`;
+      }
+
+
+      return `Great question! 😊
+
+You're planning for ${selectedDestination}.
+
+I can help you with:
+
+🗺️ Itinerary
+💰 Budget planning
+🏡 Stays
+✨ Experiences
+🚗 Local travel
+🍜 Food
+📍 Places to visit
+
+Try asking:
+"Make me a 3-day itinerary"
+or
+"Plan my trip under ₹20,000".`;
+    }
+
+
+    function sendMessage() {
+
+      const question =
+        input.value.trim();
+
+      if (!question) return;
+
+      addMessage(question, "user");
+
+      input.value = "";
+
+      const typing =
+        document.createElement("div");
+
+      typing.className =
+        "message ai typing";
+
+      typing.textContent =
+        "HimVoya AI is thinking...";
+
+      messages.appendChild(typing);
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+
+      setTimeout(() => {
+
+        typing.remove();
+
+        addMessage(
+          getAIResponse(question),
+          "ai"
+        );
+
+      }, 700);
+    }
+
+
+    sendButton.addEventListener(
+      "click",
+      sendMessage
+    );
+
+
+    input.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+
+      }
+    );
+
+
+    destinationButtons.forEach(
+      function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            destinationButtons.forEach(
+              btn =>
+                btn.classList.remove("active")
+            );
+
+            button.classList.add("active");
+
+            selectedDestination =
+              button.dataset.destination;
+
+            currentDestination.textContent =
+              selectedDestination;
+
+            addMessage(
+              `Great choice! 🏔️
+
+I've switched your destination to ${selectedDestination}.
+
+What would you like me to plan?`,
+              "ai"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    quickButtons.forEach(
+      function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            input.value =
+              button.dataset.question;
+
+            sendMessage();
+
+          }
+        );
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
