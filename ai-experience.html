@@ -488,23 +488,35 @@ I can later personalize this according to your budget, travel dates and interest
 
 
       if (q.includes("20000") ||
-          q.includes("budget")) {
+    q.includes("budget") ||
+    q.includes("price") ||
+    q.includes("cost") ||
+    q.includes("cheap") ||
+    q.includes("afford")) {
 
-        return `Yes 👍
+  return `Yes 👍
 
-For a ₹20,000 trip to ${selectedDestination}, I would roughly divide the budget like this:
+I can help you plan a realistic ${selectedDestination} trip around your budget.
 
-Stay: ₹6,000–₹7,000
-Food: ₹3,000–₹4,000
-Local transport: ₹3,000
-Activities: ₹2,000–₹3,000
-Buffer: ₹2,000
+For a ₹20,000 budget, a practical starting breakdown could be:
 
-The exact plan will depend on your starting city and number of travellers.
+🏡 Stay: ₹6,000–₹7,000
+🍜 Food: ₹3,000–₹4,000
+🚗 Local transport: ₹3,000
+✨ Experiences: ₹2,000–₹3,000
+💰 Emergency / buffer: ₹2,000
 
-Tell me your travel dates and I'll build a more specific plan.`;
-      }
+But I don't want to give you a generic plan.
 
+Tell me:
+
+1️⃣ Where are you travelling from?
+2️⃣ How many people?
+3️⃣ How many days?
+4️⃣ Your maximum budget?
+
+Then I'll create a personalised ${selectedDestination} plan for you.`;
+}
 
       if (q.includes("stay") ||
           q.includes("hotel")) {
